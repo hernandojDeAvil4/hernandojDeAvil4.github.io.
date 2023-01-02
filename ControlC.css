@@ -1,0 +1,13 @@
+h1 {text-align: center;}
+h2 {text-align: center;}
+h3 {text-align: left;}
+h4 {text-align: left;}
+p {text-align: justify;}
+div{font-family: 'Courier New', Courier, monospace;}
+.ejemplo{ background-color: darkgreen;}
+    nav{ background-color: rgb(147, 174, 106);}
+    .teorema{background-color: aquamarine;}
+.imagen{text-align: center;
+    border: 3mm solid;
+    border-width: 2mm;
+border-radius: 5%;}
