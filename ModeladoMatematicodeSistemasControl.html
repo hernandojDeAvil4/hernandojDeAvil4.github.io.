@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <style>
+    h1 {text-align: center;}
+    h2 {text-align: center;}
+    h3 {text-align: left;}
+    h4 {text-align: left;}
+    p {text-align: justify;}
+    div{font-family: 'Courier New', Courier, monospace;}
+    .ejemplo{ background-color: darkgreen;}
+        nav{ background-color: rgb(147, 174, 106);}
+        .teorema{background-color: aquamarine;}
+   </style>
+  <title>La transformada de Laplace</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <nav>
+    <ul>
+        <li> <a href="Transformalda_Laplace.html">La transformada de Laplace</a></li>
+        <li> <a href="SolucionporcomputadoraEFP.html">
+            Solución por computadora de la expansión en fracciones parciales
+        </a> </li>
+        <li><a href="LaplaceANDEcuacionesDiferenciales.html">Aplicación de la transformada de laplace a la solución
+            de ecuaciones diferenciales ordinarias lineales.</a></li>
+            <li> <a href="LaTransformadaZ.html">La transformada z</a> </li>
+    </ul>
+</nav>
+</head>
+<body>
+<div style="font-family: Courier New">
+    <h1>Modelado Matemático de sistemas de control </h1>
+    <div>
+        <h2>Introducción</h2>
+        <p>
+            Un modelo matemático de un sistema dinamico es definido como un conjunto de 
+            ecuaciones que representan la dinámica del sistema, estos pueden ser representados
+            con diferentes tipos de modelos matemáticos. Por otro lado, la dinámica de muchos
+            sistemas puede ser representada mediante ecuaciones diferenciales, estas a su vez se
+            obtiene al utilizar diferentes leyes que gobiernan un sistema en particular. Es importante
+            recalcar que obtener modelos matemáticos razonables es la parte más importante de todo el
+            analisis de sistemas de control. 
+        </p>
+        <p>
+            <h3>Modelo matemático:</h3> Asumen formas diferentes dependiendo del problema particular
+            que se este analizando. Por ejemplo, para problemas de control optimo, es mejor utilizar
+            representaciones de espacio-tiempo. Por otro lado, para los problemas de respuesta 
+            trasendiente o analsisi de respuesta de frecuencia, la representación de función de 
+            transferencia es más combeniente.Despues de que se obtiene un modelo matemático, se 
+            pueden utilizar varias herramientas analíticas y computacionales para propositos de
+            analisis y síntesis. 
+        </p>
+        <p>
+            <h3>Simplicidad versus precisión:</h3>Es recomendado mantener la comparación entre
+             la simplicidad de un modelo matemático y su precisión en el resultado.
+              La simplicidad se logra ignorando algunas no-linealidades inherentes en algunas
+               propiedades físicas. Sí es despreciable el efecto de ignorar estas no-linealidades
+                en la respuesta al sistema, entonces el modelo simplificado es una buena opción.
+                 No obstante, si en la prueba experimental se demuestra que las no-linealidades 
+                 afectan considerablemente la respuesta al sistema, entonces es la señal para 
+                 proceder a un sistema más complejo. En general, es recomendable empezar con 
+                 modelo simplificado del sistema, para hacerse de una idea de su comportamiento
+                  y luego (mientras que sea justificado) elaborar un modelo matemático más completo. 
+
+            En algunas ocasiones un modelo simple puede funcionar para bajas frecuencias, pero en altas frecuencias el error se acumula considerablemente. Por ejemplo, la masa del resorte puede ser ignorada en bajas frecuencias, pero en altas frecuencias no puede ser ignorada. 
+        </p>
+        <p>
+            <h3>Sistema lineal:</h3>Cuando el <b>principio de superposición</b> aplica, un sistema es llamado
+            lineal. el<b>principio de superposición</b> dicta que la respuesta producida por la 
+            aplicación simultanea de dos funciones de fortalecimiento diferentes es la suma de las dos
+            respuestas individuales.Por lo tanto, para el sistema lineal, la respuesta a varias entradas
+             puede calcularse tratando una entrada a la vez y sumando los resultados.En una investigación 
+             experimental de un sistema dinámico, si la causa y el efecto son proporcionales, lo que implica
+              que se cumple el principio de superposición, entonces el sistema puede considerarse lineal.
+        </p>
+
+        <p>
+            <h3>Sistemas lineales invariantes y variantes con el tiempo:</h3>
+            Una ecuación diferencial es lineal cunado sus coeficientes son constantes o son función
+            de la variable independiente unicamente. Sistemas dinámicos formados por componenetes
+            de parámetros concentrados lineales invariantes con el tiempo se decriben con <b>ED's</b>
+            lineales invariantes con el tiempo. Esto sistemas se denominan 
+            <b>sistemas lineales invariantes con el tiempo(o lineales de coeficientes constantes)</b>.
+            Por otro lado, los sistemas de <b>ED's</b> cuyos coeficientes son funciones del tiempo, se llaman
+            <b>sistemas lineales variantes con el tiempo.</b>
+        </p>
+   
+    </div>
+
+    <div>
+        <h2>Función de Transferencia y respuesta-impulso</h2>
+        <p>
+            La función de transferencia de un sistema descrito mediante una ecuación diferencial lineal
+            e invariante con el tiempo se define como el cociente entre la transformada de <b>Laplace</b>
+            de la salida(función de respuesta) y la transformada de Laplace de la entrada(función de 
+            exitación) bajo la suposición de que todas las condiciones iniciales son cero.
+        </p>
+        <p>
+            Para el sistema <b>Lineal e invariante con el tiempo</b> descrito mediante la siguiente <b>ED</b>
+            \[\begin{split} 
+            a_0y^{n}+a_1y^{n-1}+\cdots+a_{n-1}y^{1}+a_{n}y=\\
+            b_{0}x^{m}+b_{1}x^{m-1}+\cdots+b_{m-1}x^{1}+b_{m}x \: \: \: (n \geq m) 
+            \end{split}\]
+            Donde \(y\) es la salida del sistema and \(x\) es la entrada. La función de transferencia
+            de este sistema es la relación:
+            \[ \textrm{Función de transferencia}=G(s)=
+            \frac{\mathscr{L}[salida]}{\mathscr{L}[entrada]}\Big|_{Condición inicial cero} \]
+            El sistema es llamado <i>sistema de n-ésimo orden</i> si la potencia más alta de \(s\)
+            en el denominador de la función de transferencia es igual a \(n\). Tenga en cuanta los
+            siguientes comentarios sobre la función de transferencia.
+            <ol>
+                <li>Es un modelo matemático porque es un
+                    método operacional para expresar la ecuación diferencial que relaciona la variable de
+                    salida con la variable de entrada.</li>
+                <li>Es una <b>propiedad</b> de un sistema, 
+                    independiente de la magánitud y naturaleza de la entrada o función 
+                    de excitació</li>
+                <li>Incluye las unidades necesarias para relacionar entrada con salida,
+                    pero no proporciona información sobre la estructura física del sistema.
+                    Lo que conduce a que la función de tranferencia de muchos sistemas físicos 
+                    diferentes puedan ser idénticos. 
+                </li>
+                <li>
+                    Cuando se conoce, se estudia la salida o respuesta para varias formas de entrada,
+                    con la intención de comprender la naturaleza del sistema. 
+                </li>
+                <li>
+                    Cuando se desconoce la función de transferencia de un sistema, puede establecerse
+                    experimentalmente introduciendo entradas conocidas y estudiando la salida del sistema.
+                    Una vez establecida una función de transferencia, proporciona una descripción
+                    completa de las características dinámicas del sistema, a diferencia de su 
+                    descripción física.
+                </li>
+            </ol> 
+        </p>
+        <h3>Integral de convolución</h3>
+        <p>
+            Para un sistema lineal e invariante con el tiempo, la función de transferencia \(G(s)\) es:
+            \[ G(s)=\frac{Y(s)}{X(s)} \]
+            Donde:
+            <ul>
+                <li>\[Y(s)\] es la transformada de Laplace de la salida </li>
+                <li>\[X(s)\] es la transformada de Laplace de la entrada</li>
+            </ul> 
+            Si suponemos que todas las condiciones iniciales son \(0\) se obtiene:
+            \[Y(s)=G(s)X(s)\]
+            De acuerdo al <b>Teorema 9</b>:
+            \[  F_{1}(S)F_{2}(S)=\mathscr{L} \left[ f_1(t)*f_2(t) \right]=
+            \mathscr{L} \left[  \int_{0}^{t} f_1(\tau)f_2(t-\tau)d\tau  \right]=
+            \mathscr{L} \left[ \int_{0}^{t}f_2(\tau)f_1(t-\tau)d\tau  \right] \]
+
+            La multiplicación en el dominio complejo es equivalente
+            a la transformada de Laplace de la convolución en el doinio del tiempo. Por tanto:
+            \[y(t)=\int_{0}^{t}x(\tau)g(t-\tau)d\tau=\int_{0}^{t}g(\tau)x(t-\tau)d\tau \]
+            Donde \(g(t)\) y \(x(t)\) es \(0\) para \(t< 0\) 
+        </p>
+        <h3>Función de respuesta a impulso</h3>
+        <p>
+            La salida(respuesta) de un sistema con entrada de impulso unitario cuando las 
+            condiciones iniciales son \(0\) es:
+            \[ Y(s)=G(s) \]
+            Por tanto la transformada inversa de Laplace de \(G(s)\) es:
+            \[ \mathscr{L}^{-1} \left[ G(s) \right]=g(t) \]
+            Se denomina respuesta-impulso. Esta erspuesta \(g(t)\) también se denomina
+            función de ponderación del sistema.
+            La respuesta-impulso \( g(t) \) es la respuesta de un sistema lineal a una entrada
+            impulso unitario cuando las condiciones iniciales son cero. La transformada de Laplace
+            de esta función proporciona la función de transferencia. Por tanto, la función de transferencia
+            y la respuesta-impulso de un sistema lineal e invariante con el tiempo contiene la misma 
+            información acerca de la dinámica del sistema. De esta manera, si se excita el sistema con 
+            una entrada impulso y se mide la respuesta, es posible obtener una información completa 
+            acerca de sus características dinámicas.(En la practica, una  entrada de pulso con una duración
+            muy corta comparada con las constantes de tiempo significativas del sistema se considera 
+            un impulso).
+        </p>
+    </div>
+
+    <div>
+        <h3>Sistema automatico de control:</h3>
+        <p>
+            Los sistemas de control estan compuestos de multiples componentes, estos estan esquematizados
+            en los famososo diagramas de bloque, donde cada bloque representa un elemento del sistema de
+            control
+        </p>
+        <p>
+            <b>Diagrama de bloque:</b> Es una representación grafica de las funciones
+            realizada por cada uno de los componente y del flujo de señales. Facilita el entendimiento
+            de la relación entre los componentes. A diferencia del modelo puramente matemático, tiene
+            la ventaja de indicar de forma más realista el flujo de señal.
+            Todas las variables de sistema estan enlazadas unas a otras a través de <i>bloques funcionales</i>.
+            Estos <i>bloques</i>  representan una operación matemática en la señal de entrada al bloque 
+            que produce la salida. La función de transferencia se introduce en los bloques correspondientes
+            que estan conectados mediante flechas que indican el sentido de flujo.
+        </p>
+        <div>
+            <canvas id="myCanvas" width="200" height="100"></canvas>
+        </div>
+    </div>
+
+<script src="https://github.com/hernandojDeAvil4/ControlClasico/blob/f1e0fa885eb8a908023ed3ce955909614554f725/Control_clasico.js"></script>
+
+ <!--   <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(0,0,150,75);
+    </script>
+-->
+
+</div>
+</body>
+</html>
