@@ -1,0 +1,172 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <style>
+        h1 {text-align: center;}
+        h2 {text-align: center;}
+        h3 {text-align: left;}
+        h4 {text-align: left;}
+        p {text-align: justify;}
+        div{font-family: 'Courier New', Courier, monospace;}
+        .ejemplo{ background-color: darkgreen;}
+        nav{ background-color: rgb(147, 174, 106);}
+       </style>
+    <title>La transformada de Laplace</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <title>Document</title>
+    <nav>
+        <ul>
+            <li> <a href="Transformalda_Laplace.html">La transformada de Laplace</a></li>
+            <li> <a href="SolucionporcomputadoraEFP.html">Solución por computadora de 
+                la expansión en fracciones parciales</a></li>
+            <li> <a href="LaTransformadaZ.html">La transformada z</a> </li>
+            <li><a href="ModeladoMatematicodeSistemasControl.html">
+                Modelado Matemático de sistemas de control</a></li>
+        </ul>
+    </nav>
+</head>
+<body>
+    
+    <div>
+        <h1>Aplicación de la transformada de laplace a la solución
+            de ecuaciones diferenciales ordinarias lineales. 
+        </h1>
+        <div>
+            <h2>Introducción</h2>
+            <p>
+                Con el conocimiento de los teoremas de Laplace, las tablas, transformada inversa y
+                expansión por fracciones parciales se pueden resolver una rica diversidad de 
+                ecuaciones diferenciales (<b>ECU</b>) los pasos son los siguientes.
+                <div style="background-color: grey;"  >
+                    <ol>
+                        <li>Transformar la ecuación diferencial al domino de \(s\) mediante la
+                            transformada de Laplace, utilizando la tabla de transformada de Laplace. 
+                        </li>
+                        <li>
+                            Manipular las ecuaciones algebraicas transformadas y resolverlas para la
+                            variable de salida. 
+                        </li>
+                        <li>
+                            Realizar la expansión en fracciones parciales de la ecuación algebraica
+                            transformada.
+                        </li>
+                        <li>
+                            Obtener la transformada inversa de Laplace de la tabla de transformadas de
+                            Laplace.
+                        </li>
+                    </ol>
+                </div>  
+            </p>
+        </div>
+    </div>
+
+    <div class="ejemplo">
+        <p>
+            <h3 >Ejemplo 1:</h3>
+            Considere la ecuación diferencial:
+            \[  \frac{d^2 y(t)}{dt^2}+3\frac{dy(t)}{dt}+2y(t)=5u_{s}(t) \]
+            En donde \( u(s) \) es la función escalón. Las condiciones iniciales son:
+            <ul>
+                <li>\(  y(0)=-1 \)</li>
+                <li> \( y^{1}(0)=\frac{dy(t)}{dt}\Big|_{t=0} \)=2  </li>
+            </ul>
+            Primero se toma la transformada de Laplace en ambas partes. Para la expresión
+            \[ \frac{d^2 y(t)}{dt^2}  \]
+            hacemos \(  F(t) \rightarrow Y(t) \) y \(  f(t) \rightarrow y(t) \), Luego utilizamos el
+            Teorema 3.5 que dicta:
+            \[\mathscr{L}\left[ \frac{d^{n}f(t)}{dt^{n}} \right]=s^{n}F(s)-
+            \lim_{t \to 0}\left[ s^{n-1}f(t)+s^{n-2}\frac{df(t)}{dt} + 
+            \cdots +\frac{d^{n-1}f(t)}{dt^{n-1}} \right]=
+            s^{n}F(s)-s^{n-1}f(0)-s^{n-2}f^{1}(0)- \cdots -f^{n-1}(0) \]
+            Por tanto:
+            \[ \mathscr{L} \left[  \frac{d^2 y(t)}{dt^2} \right]=
+            s^{2}Y(s)-\lim_{t \to 0}sy(s)-\lim_{t \to 0}y^{1}(s)=
+            s^{2}Y(s)-sy(0)-y^{1}(0) \]
+            \[ \mathscr{L} \left[  3\frac{dy(t)}{dt} \right]=
+            3sY(s)-3\lim_{t \to 0}y(s)=
+            3Y(s)-3y(0) \]
+            Utilizando el Teorema 1:
+            \[\mathscr{L}=kF(s) \]
+            Por tanto:    
+            \[  \mathscr{L} \left[  2y(t)   \right]= 2Y(s)  \]
+            Finalmente del ejemplo 1 de la sección
+            <a href="Transformalda_Laplace.html">La transformada de Laplace</a>:
+            \[  \mathscr{L} \left[  5u_s(t)   \right]= \frac{5}{s}  \]
+            Por tanto la ecuación diferencial queda:
+            \[ s^{2}Y(s)-sy(0)-y^{1}(0) + 3sY(s)-3y(0) + 2Y(s)= \frac{5}{s} \]
+            Sustituyendo los valores y resolviendo:
+            \[ s^{2}Y(s)+s-2+3sY(s)+3+2Y(s)= \frac{5}{s}  \] 
+            \[ s^{2}Y(s)+3sY(s)+2Y(s)+s-2+3= \frac{5}{s}  \]
+            \[ Y(s)(s^{2}+s3+2)= \frac{5}{s}-s-1  \]
+            \[ Y(s)= \frac{5-s^{2}-s}{s(s^{2}+3s+2)}  \]
+            Que puede ser reescrito como:
+            \[ Y(s)= \frac{-s^{2}-s+5}{s(s+1)(s+2)}  \]
+            Se puede aplicar la expansión por fracciones parciales:
+             \[ Y(s)=\frac{3}{2(s + 2)}-\frac{5}{s + 1}+\frac{5}{2s} \]
+            Luego el ultimo paso por aplicar es resolver la transformada inversa de Laplace:
+            \[ \frac{(5e^{2t}-10e^{t}+3)e^{-2t}}{2}u(t)  \]
+            que se puede simplificar como:
+            \[ (5/2-5e^{-t}+3e^{-2t})u(t)  \]
+            Donde \( u(t)\) representa la función escalón, \(5/2 \) es la solución en estado
+            estable y los dos últimos representan la solución transitoria.     
+        </p>
+    </div>
+
+    <div class="ejemplo">
+        <p>
+            <h3>Ejemplo 2:</h3>
+            Considere la ecuación diferencial:
+            \[ \frac{d^2 y(t)}{dt^2}+34.5\frac{dy(t)}{dt}+1000y(t) =1000u_{s}(t)  \] 
+            Las condiciones iniciales son:
+            <ul>
+                <li>\( y(0)=0  \)</li>
+                <li>\( y^{1}(0)=\frac{dy(0)}{dt}=0   \)</li>
+            </ul>
+            Aplicando la transformada de laplace:
+            \[  \mathscr{L} \left[ \frac{d^2 y(t)}{dt^2} \right]= 
+            s^{2}Y(s)-\lim_{t \to 0}(sy(t)-y^{1}(t))=
+            s^{2}Y(s)-sy(0)- y^{1}(0) \] <!-- Marca  -->
+            \[ \mathscr{L} \left[ 34.5\frac{dy(t)}{dt} \right]=
+            34.5sY(s)- \lim_{t \to 0}( 34.5y(t) )=
+            34.5sY(s)-34.5y(0) \] <!-- Marca  -->
+            \[  \mathscr{L} \left[  1000y(t)  \right]=
+            1000Y(s) \] <!-- Marca  -->
+            \[ 1000u_{s}(t)=\frac{1000}{s}   \] <!-- Marca  --> 
+            Por tanto la ecuación diferencial queda:
+            \[  s^{2}Y(s)+34.5sY(s)+1000Y(s)=\frac{1000}{s}  \]
+            \[  Y(s)(s^{2}+34.5s+1000)=\frac{1000}{s}  \]
+            \[  Y(s)=\frac{1000}{s(s^{2}+34.5s+1000)}  \]            
+            Se puede aplicar la expansión por fracciones parciales:
+            \[ -0.0345\frac{0.0289855072463768s + 1.0}{0.001s^{2} + 0.0345s + 1.0}+
+              \frac{1}{s} \]
+            Pero ya que tiene polos complejos conjugados simples, se puede escribir como:
+            \[ Y(s)=\frac{1000}{s(s^{2}+34.5s+1000)}=
+            \frac{\omega_{n}^2}{s(s^2+2\zeta \omega_n s + \omega_{n}^2)} \]
+            De aqui se deprende el sistema de ecuaciones:
+            <ol>
+                <li> \( \omega_{n}^2=1000 \) </li>
+                <li>  \(  2\zeta \omega_n=34.5  \)  </li>
+            </ol> 
+            Resolviendo da como resultado \( \omega_{n}=31.6227 \) y \( \zeta=0.54549 \). La solución
+            de la transformada inversa de Laplace se puede encontrar en
+            <a href="https://neuron.eng.wayne.edu/auth/ece4330/tables/laplace_table_expanded.pdf">
+                Laplace Transform Table</a> Pagína 3, fila 27a.
+            \[ \mathscr{L}^{-1} \left[Y(s)  \right]=\omega_{n}^2
+            \left[ \frac{1}{\omega_{n}^2}-\frac{1}{\omega_{n}^2 \sqrt{1-\zeta^2} } 
+            e^{-\zeta \omega_{n}t}\textrm{sen}(\omega_{n}\sqrt{1-\zeta^2}t +\phi) \right]  \]
+            Simplificando y reemplazando los valores:
+            \[ 1-1.19315
+            e^{-17.25 t}\textrm{sen}(26.503533t +\phi)  \] 
+            Donde \( \phi=\textrm{cos}^{-1}(\zeta)=\textrm{cos}^{-1}(0.54549)=56.94°  \)
+            Finalmente la solución final queda:
+            \[ 1-1.19315e^{-17.25 t}\textrm{sen}(26.503533t +56.94°) \]
+
+        </p>
+    </div>
+
+</body>
+</html>

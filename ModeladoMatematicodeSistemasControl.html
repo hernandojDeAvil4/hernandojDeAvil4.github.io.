@@ -3,17 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <style>
-    h1 {text-align: center;}
-    h2 {text-align: center;}
-    h3 {text-align: left;}
-    h4 {text-align: left;}
-    p {text-align: justify;}
-    div{font-family: 'Courier New', Courier, monospace;}
-    .ejemplo{ background-color: darkgreen;}
-        nav{ background-color: rgb(147, 174, 106);}
-        .teorema{background-color: aquamarine;}
-   </style>
+  <link rel="stylesheet" href="css/ControlC.css" />
+  <link rel="stylesheet" href="css/prism.css" />
   <title>La transformada de Laplace</title>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async
@@ -108,7 +99,7 @@
             Donde \(y\) es la salida del sistema and \(x\) es la entrada. La función de transferencia
             de este sistema es la relación:
             \[ \textrm{Función de transferencia}=G(s)=
-            \frac{\mathscr{L}[salida]}{\mathscr{L}[entrada]}\Big|_{Condición inicial cero} \]
+            \frac{\mathscr{L}[salida]}{\mathscr{L}[entrada]}\Big|_{\textrm{Condición inicial cero}} \]
             El sistema es llamado <i>sistema de n-ésimo orden</i> si la potencia más alta de \(s\)
             en el denominador de la función de transferencia es igual a \(n\). Tenga en cuanta los
             siguientes comentarios sobre la función de transferencia.
@@ -180,7 +171,7 @@
     </div>
 
     <div>
-        <h3>Sistema automatico de control:</h3>
+        <h2>Sistema automatico de control:</h2>
         <p>
             Los sistemas de control estan compuestos de multiples componentes, estos estan esquematizados
             en los famososo diagramas de bloque, donde cada bloque representa un elemento del sistema de
@@ -196,21 +187,501 @@
             que produce la salida. La función de transferencia se introduce en los bloques correspondientes
             que estan conectados mediante flechas que indican el sentido de flujo.
         </p>
-        <div>
-            <canvas id="myCanvas" width="200" height="100"></canvas>
+        <figure class="imagen">
+            <img src="https://hernandojdeavil4.github.io/hernandojDeAvil4.github.io./Control_02.svg" 
+            alt="Diagrama_de_Bloque">
+            <figcaption>
+                Figura 4-1
+            </figcaption>
+        </figure>
+            
+        <p>
+            En la imagen, la cabeza de la flecha apuntando al bloque, indica la entrada, y la
+            cabeza de fleja alejandose del bloque, indica la salida. A estas flechas se les 
+            refiere como señal. La dimensión, de la señal de salida es la señal de entrada 
+            multiplicada por la función de transferencia en el bloque. En general la operación
+            funcional del sistema puede ser más legible mediante la lectura del diagrama de bloque
+            que examinando el sistema físico directamente. Como un diagrama de bloque solo contiene 
+            información del comportamiento dinámico, pero no incluye información alguna sobre la 
+            construcción del sistema físico. Entonces, un diagrama de bloque puede representar muchos
+            sistemas físicos diferentes y no relacionados. De igual manera, un mismo sistema físico 
+            puede tener multiples diagramas de bloque. 
+        </p>
+        <p>
+            <b>Punto suma:</b> Un circulo con una cruz es un simbolo que indica operación suma.
+            El signo al fernte de la punta de flecha indica si la señal debe sumarse o restarse. 
+        </p>
+        <p>
+            <b>Punto de ramificación:</b> Es un punto donde la señal de bloque va de modo concurrente 
+            a otros bloques o puntos suma.
+        </p>
+        fig
+        <figure class="imagen">
+            <img src="https://hernandojdeavil4.github.io/hernandojDeAvil4.github.io./Control_03.svg"
+            alt="Diagrama_bloque_cerrado.">
+            <figcaption>Figura 4-2</figcaption>
+        </figure>
+        <p>
+            <b>Diagrama de bloque de un sistema de lazo cerrado:</b>La figura anterior muestra un ejemplo
+            de un diagrama de un diagrama de bloque de un sistema de lazo cerrado. Donde la salida \(C(s)\)
+            se realimenta al punto de suma, en donde se compara con la entrada de referencia \(R(s)\).
+            La salida \(C(s)\) se obtiene multiplicando la función de transferencia \(G(s)\) por la entrada 
+            al bloque \(E(s)\). Cuando la salida se realimenta al punto suma, para comparar, es necesario
+            convertir la forma de la señal de salida en la entrada. Por ejemplo, en un sistema de control 
+            de temperatura,por lo general la señal de salida, que tiene la dimensión de temperatura, debe 
+            convertirse a una fuerza posición o voltaje antes de que pueda compararse con la señal de entrada 
+            esto se consigue en el elemento de realimentación que tiene una función de transferencia \(H(s)\)
+            como se mostró en la figura anterior. Es decir lo que hace el elemento de realimentación es 
+            modificar la salida antes de comparar con la entrada(En la gran mayoría de los casos, el 
+            elemento de realimentación que retorna al punto suma para compararse con la entrada es 
+            \(B(s)=H(s)C(s) \))  
+        </p>
+        <p>
+            <b>Función de transferencia el lazo abierto y función de transferencia en la 
+                trayectoria directa:</b> Es el cociente de la señal de realimentación \(B(s)\)
+                entre la señal de error \(E(s)\).
+                \[ \textrm{Función de transferencia en lazo abierto}=\frac{B(s)}{E(s)=G(s)H(s) } \]
+        </p>
+        <p>
+            <b>Función de transferencia de la trayectoria directa:</b> Es el cociente entre la señal 
+            de salida \(C(s)\) y la señal del error \(E(s) \)
+            \[ \textrm{Función de transferencia de la trayectoria directa}=\frac{C(s)}{E(s)}=G(s) \] 
+        </p>
+        <p>
+            Cuando la función de tranferencia \(H(s)\) es igual a la unidad, la función de transferencia
+            en lazo abierto y la función de transferencia de la trayectoria directa son iguales:
+        </p>
+        <p>
+            <b>Función de transferencia en lazo cerrado:</b>Para el sistema que aparece en la <b>figura 4-3</b> 
+            la salida \(C(s) \) y la entrada \(R(s) \) se relacionan del modo siguiente:
+            \[ C(s)=G(s)E(s) \]
+            \[ E(s)=R(s)-B(s) \]
+            \[ =R(s)-H(s)C(s) \]
+        </p>
+        <figure class="imagen">
+            <img src="/assets/SVG/Control_03.svg" alt="Lazo_cerrado">
+            <figcaption>Figura 4-3</figcaption>
+        </figure>
+        <p>
+            Reemplazando \(E(s)\) obtenemos:
+            \[C(s)=G(s)[R(s)-H(s)C(s)] \] 
+            o tambien:
+            \[ \frac{C(s)}{R(s)}=\frac{G(s)}{1+G(s)H(s)} \]
+            A esta función se le denomina <b>Función de transferenica en lazo cerrado</b>. De esta 
+            ecuación se puede obtener.
+            \[ C(s)=\frac{G(s)}{1+G(s)H(s)}R(s) \]
+            La salida de un sistema de lazo cerrado depende de la función de transferencia como de la 
+            naturaleza de la entrada. 
+        </p>
+        <p>
+            <b>Sistema de lazo cerrado sujeto a una perturbación:</b> Cuando se presenta la entrada de 
+            referencia y la perturbación en un sistema lineal, cada una de ellas puede tratarse en forma
+            independiente y la salida de cada entrada puede sumarse para obtener una salida completa como
+            se muestra en la imagen.
+            <figure class="imagen">
+                <img src="/assets/SVG/Control_04.svg" alt="Sistema_lazo_cerrado_perturbado">
+                <figcaption>Figura 4-4</figcaption>
+            </figure>
+            La forma en que se introduce cada elemento se muestra en el punto suma mediante un signo de 
+            más o de menos. Se supone que el sistema esta inicialmente relajadao con un error de cero, se 
+            calcula la respuesta \(C_D(s) \) sólo para la perturbación. Esta respuesta se encuentra a partir de:
+            \[ \frac{C_D(s)}{D(s)}=\frac{G_{2}(s)}{1+G_{1}(s)G_{2}(s)H(S) } \]
+            Por otra parte, si consideramos la respuesta a la entrada de referencia \(R(s)\) y ya que suponemos
+            que el error inicialmente es cero, entonces la respuesta \(C_{R}(s) \) a la entrada de referencia 
+            se obtiene a partir de:
+        \[\frac{C_R(s)}{R(s)}=\frac{G_1(s)G_2(s)}{1+G_1(s)G_2(s)H(s)}  \]
+        </p>
+        <div class="acordeon">
+            <div class="contenedor">
+            <div class="etiqueta">¿De dónde salen estas ecuaciones?</div>
+            <hr>
+            <div class="contenido">
+                Si se analiza la figura <b>4-4</b> podemos deducir las siguientes relaciones:
+                \[C(s)=G_{2}(s)E_{1}(s)\]
+                \[E_{1}(s)=G_{1}(s)E_{2}(s)+D(s) \]
+                \[E_{2}(s)=R(s)-H(s)C(s) \]
+                Reemplazando \(E_2(s) \) en \(E_1(s) \)
+                \[E_{1}(s)=G_{1}(s)[R(s)-H(s)C(s)]+D(s) \]
+                Luego reemplazando \(E_1(s) \) en \(C_1(s) \)
+                \[C(s)=G_{2}(s)[G_{1}(s)[R(s)-H(s)C(s)]+D(s)\]
+                Multiplicando y despejando para \(C(s) \)
+                \[C(S)+G_{2}(s)G_{1}(s)H(s)C(s)=G_{2}(s)G_{1}(s)R(s)+G_{2}(s)D(s) \]
+                Despejando \( C(s) \)
+                \[ C(s)=\frac{G_{2}(s)G_{1}(s)R(s)+G_{2}(s)D(s) }{1+G_{2}(s)G_{1}(s)H(s) } \]
+                Cuando el sistema esta relajado podemos calcular solo para la perturbación, entonces
+                \(R(s)=0\) o muy pequeño:
+                \[ \lim_{R(s)\to 0} C(s)=C_D(s)=\frac{G_{2}(s)D(s) }{1+G_{2}(s)G_{1}(s)H(s) } \]
+                Entonces
+                \[\frac{C_D(s)}{D(s)}=\frac{G_{2}(s)}{1+G_{2}(s)G_{1}(s)H(s) }  \]
+                De igual forma podemos calcular para el sistema sisn señal de referencia y solo con perturbación
+                \[\lim_{D(s)\to 0} C(s)=C_R(s)=\frac{G_{2}(s)G_{1}(s)R(s) }{1+G_{2}(s)G_{1}(s)H(s) }\]
+                Entonces 
+                \[\frac{C_R(s)}{R(s)}=\frac{G_{2}(s)G_{1}(s)R(s)}{1+G_{2}(s)G_{1}(s)H(s) }  \]
+            </div>
+            </div>
         </div>
+        <p>
+            La respuesta se optiene sumando las dos respuestas individuales:
+            \[C(s)=C_{R}(s)+C_{D}(s) \] 
+        </p>
+        <p>
+            <b>Obtener funciones de transferencia en serie, paralelo y realimentada(lazo cerrado) con Python:</b>
+            Realizar calculos de funciones de tranferencia es el día a día en los sistemas de control. Claramente,
+            realizar esta labor manualmente es muy tedioso y es recomendado realizarlo con auxilio de softwares de computo.
+            El más popular el <b>MATLAB</b> sguido de <b>Octave</b>, pero tambien se puede utilizar
+            <a href="https://www.python.org/">Python</a>, el cual ofrece paquetes para realizar el calculo de funciones de tranferencia.
+            Puede descargar el software y posteriormente instalar las librerias del sistemas de control con el comando:
+            <pre class="codigo">
+                <code class="language-python">
+                    pip install slycot
+                    pip install control
+                </code>
+            </pre>
+            Si tiene problemas en la instalación se recomienda installar 
+            <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda3</a> el cual le instalara el
+            <i>Anaconda Command Prompt</i>. Puede hacerlo mediante el codigo:
+            <pre class="codigo">
+                <code class="language-python">
+                    winget install --id Anaconda.Miniconda3
+                </code>
+            </pre>
+            Luego dentro del <i>Anaconda Command Prompt</i> puede instalar los siguientes elementos:
+            <ul>
+                <li>NumPy</li>
+                <li>scikit-build</li>
+                <li>CMake</li>
+                <li>C compiler (e.g. gcc, MS Visual C++, clang)</li>
+                <li>FORTRAN compiler (e.g. gfortran, ifort, flang)</li>
+                <li>BLAS/LAPACK (e.g. OpenBLAS, ATLAS, MKL)</li>
+            </ul>
+        </p>
+        <p>
+            Cuando ya tenga instalado todas las dependencias correspondientes puede ejecutar
+            los codigos de python que seran mostrado en la siguientes secciones, pero solo desde el
+            <i>Anaconda Command Prompt</i> de la siguiente forma:
+            <pre class="codigo">
+                <code class="language-python">
+                    (base) PS C:\Users\UsersName\Documentos\python codes\Control> python Control14.py
+                </code>
+            </pre> 
+        </p>
+        <p>
+            Por ejemplo, si se quiere calcular la función de transferencia de un sistema en serie como el que se muestra
+            en la figura 4-5 a, con dos elementos \(G_1(s)\) y \(G_2(s)\) conectados, representados por las 
+            siguientes funciones de transferencia:
+            \[G_{1}(s)=\frac{10}{s^2 + 2s + 10} \]
+            \[G_{2}(s)=\frac{5}{s + 5} \]
+
+            <figure class="imagen">
+                <img src="assets/SVG/Control_05.svg" alt="Sistema_control_serie_01" height="80px">
+                <figcaption>(a) Sistema de control en serie</figcaption>
+                <img src="assets/SVG/Control_06.svg" alt="Sistema_control_serie_01" height="180px">
+                <figcaption>(b) Sistema de control en paralelo</figcaption>
+                <img src="assets/SVG/Control_07.svg" alt="Sistema_control_serie_01" height="180px">
+                <figcaption>(c) Sistema de control realimentado</figcaption>
+            </figure>
+
+            Las funciones de transferencia mostradas tambien se pueden expresar como:
+            \[G_{1}(s)=\frac{num1}{den1} \]
+            \[G_{2}(s)=\frac{num2}{den2} \]
+            Para obtener la función de transferencia del sistema de control en serie se escribe 
+            el siguiente codigo:
+            <pre class="codigo">
+                <code class="language-python">
+                    import slycot
+                    import control
+                    from control.matlab import *
+                    import numpy as np
+
+
+                    num1 =np.array([10])
+                    den1 = np.array([1,2,10])
+                    num2 = np.array([5])
+                    den2 = np.array([1,5])
+                    syst1=control.tf(num1,den1)
+                    syst2=control.tf(num2,den2)
+
+                    sol=control.series(syst1,syst2)
+                    print(sol)
+                </code>
+            </pre>
+            El resultado es:
+            <figure class="imagen">
+                <img src="assets/png/Python_01.png" alt="Sol_control14.py">
+                <figcaption>Solución del código ejecutado</figcaption>
+            </figure>
+        </p>
+        <p>
+            De igual forma se puede realizar los calculos de función de transferencia para los sistemas
+            en paralelos y realimentado:
+        </p>
+        <pre class="codigo">
+            <code class="language-python">
+                import slycot
+                import control
+                from control.matlab import *
+                import numpy as np
+                
+                
+                num1 =np.array([10])
+                den1 = np.array([1,2,10])
+                num2 = np.array([5])
+                den2 = np.array([1,5])
+                syst1=control.tf(num1,den1)
+                syst2=control.tf(num2,den2)
+                
+                sol1=control.series(syst1,syst2)
+                sol2=control.parallel(syst1,syst2)
+                sol3=control.feedback(syst1,syst2)
+                print('----------------------------------------------------------------------')
+                print('**********La solución para el sistema en serie es.***********')
+                print(sol1)
+                print('**********La solución para el sistema en paralelo es.***********')
+                print(sol2)
+                print('**********La solución para el sistema realimentado es.***********')
+                print(sol3)
+                print('----------------------------------------------------------------------')
+            </code>
+        </pre>
+        <p>
+            El resultado es:
+        </p>
+        <figure class="imagen">
+            <img src="assets/png/Python_02.png" alt="Sol_control14.py-b">
+            <figcaption>Solución del código ejecutado para los tres sistemas</figcaption>
+        </figure>
+        <p>
+            <b>Controlador automático:</b>Utiliza la señal de realimentación y la compara con la señal
+            de referencia en la entrada para determinar la desviación y producir una señal de control   
+            que reducirá la desviación a un valor muy pequeño, la manera en la que se produce la señal 
+            de control se llama <i>acción de control</i> Un ejemplo de un diagrama de bloque de un sistema
+            industrial de control se muestra en la figura siguiente:
+        </p>
+        <figure class="imagen">
+            <img src="assets/SVG/Control_08.svg" alt="CONTROL_AUTOMATICO" height=300px>
+            <figcaption>Diagrama de bloque de un sistema industrial de control</figcaption>
+        </figure>
+        <p>
+            El controlador toma la débil señal de error, la amplifica al nivel requerido y la salida es
+            enviada al actuador, el cual puede ser un motor eléctrico, neumático, hidráulico o una válvula.
+        </p>
+        <p>
+            <b>Clasificación de controladores industriales:</b> Muchos de los controladores industriales 
+            pueden clasificarse de acuerdo a sus acciones de control:
+        </p>
+        <table class="tg">
+            <thead>
+              <tr>
+                <th class="tg-r5g3">Acción de control:</th>
+                <th class="tg-h38y">Descripción</th>
+                <th class="tg-h38y">Ecuación</th>
+                <th class="tg-h38y">Comentarios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tg-0lax">
+                    Acción de control de dos posiciones o de encendido y apagado.
+                </td>
+                <td class="tg-0lax">
+                    El elemento actuante solo tiene dos posiciones fijas, apagado o encendido.
+                    Es un sistema simple y barato y por esta razón es ampliamente utilizado en
+                    la industria y sistemas de control domésticos.  
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                        Si las señales de control es \(u(t)\) que se mantiene al máximo o al mínimo
+                        y la señal del error es \(e(t) \), el valor de \(u(t)\) depende de:
+                        \[u(t)=U_1, \: \: \: \textrm{para} \: \: \: e(t)> 0\] 
+                        \[u(t)=U_2, \: \: \: \textrm{para} \: \: \: e(t)< 0\]
+                        Donde \(U_1\) y \(U_2\) son constantes. El valor mínimo \(U_2\) normalmente es cero.    
+                    </p>
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                    Los dispositivos utilizados normalmente son eléctricos, como válvulas solenoides
+                    o neumáticas. En la figura se muestra un diagrama de Bloque.
+                    </p>
+                    <figure class="imagen">
+                        <img src="assets/SVG/Control_09.svg" alt="Control_on_off" height=100px>
+                        <figcaption>Diagrama de bloque para control de dos posiciones
+                             o de encendido y apagado</figcaption>
+                    </figure>
+                    <figure class="imagen">
+                        <img src="assets/SVG/Control_10.svg" alt="Control_on_off_b" height=120px>
+                        <figcaption>Diagrama de bloque para control de dos posiciones
+                             o de encendido y apagado con brecha(Gap)</figcaption>
+                    </figure>
+                    <p>
+                        Se le llama Brecha diferencial (Gap) al intervalo que debe recorrer la señal
+                        de error de accionamiento para que se produzca la conmutación. Esto causa que la 
+                        salida del controlador \(u(t)\) mantenga su valor presente hasta que la señal del error
+                        se mueva más allá del cero. Esto con el objetivo de prevenir operaciones muy frecuentes
+                        del actuador, extendiendo de esta forma el ciclo de vida util. Los efectos de esta brecha
+                        se pueden ver en el sistema de control mostrado en la siguiente figura.  
+                    </p>
+                    <figure class="imagen">
+                        <img src="assets/SVG/Control0_11.svg" alt="Control_tanque" height=180px>
+                        <figcaption>Curva de elevación en el tiempo versus altura de líquido en el tanque</figcaption>
+                    </figure>
+                    <figure class="imagen">
+                        <img src="assets/SVG/Control0_12.svg" alt="Control_tanque_b" height=200px>
+                        <figcaption>Sistema de control para nivel de líquido</figcaption>
+                    </figure>
+                </td>
+            </td>
+              </tr>
+              <tr>
+                <td class="tg-0lax">
+                    Acción de control proporcional.
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                        Como su nombre lo indica, la relación entre la señal conmutada y la señal del error
+                        es proporcional, ajustar la constante de proporcionalidad es lo más crucial en estos 
+                        sistemas. 
+                    </p>
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                        La relación entre la salida \(u(t)\) y la señal de error de accionamieno \(e(t)\) es:
+                        \[u(t)=K_{p}e(t) \]
+                        En fomr ade transformada de Laplace.
+                        \[\frac{U(s)}{E(s)}=K_p \]
+                        Donde \(K_p \) es la ganancia proporcional. 
+                    </p>
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                        El controlador proporcional es en esencia un amplificador. 
+                    </p>
+                </td>
+              </tr>
+              <tr>
+                <td class="tg-0lax">
+                    Acción de control integral.
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                    En estos sistemas la rata de cambio de la señal de saila del controlador
+                    es proporcional a la señal de error de accionamiento
+                    </p>
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                        La ecuación queda:
+                        \[ \frac{du(t)}{dt}=K_i e(t) \]
+                        o
+                        \[ u(t)=K_i \int_{0}^{t}e(t)dt \]
+                        La función de transferencia queda:
+                        \[ \frac{U(s)}{F(s)}=\frac{K_i}{s} \]
+                    </p>
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                        \(K_i\) es una constante ajustable. 
+                    </p>
+                </td>
+              </tr>
+              <tr>
+                <td class="tg-0lax">
+                    Acción de control proporcional más integral.
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                        El controlador proporcional integral a veces también se conoce como controlador 
+                        proporcional más integral (PI). Es un tipo de controlador formado por la 
+                        combinación de la acción de control proporcional e integral. 
+                        Por ello se denomina controlador PI.
+                    </p>
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                        La acción de control esta definida por:
+                        \[ u(t)=K_p e(t) + \frac{K_p}{T_i}\int_{0}^{t}e(t)dt \]
+                        La función de transferencia es:
+                        \[ \frac{U(s)}{E(s)}=K_p \left( 1+ \frac{1}{T_i s} \right) \]
+                        Donde \(T_i\) es el <i>Tiempo integral.</i>
+                    </p>
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                        Podemos decir que al introducir controladores PI en un sistema de control,
+                         el error de estado estacionario del sistema se reduce extremadamente sin 
+                         afectar a la estabilidad del sistema.
+                    </p>
+                </td>
+              </tr>
+              <tr>
+                <td class="tg-0lax">
+                    Acción de control proporcional más derivativo.
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                        Un controlador de tipo proporcional-derivativo (PD) es un tipo de controlador
+                         utilizado en sistemas de control en el que la salida del controlador varía
+                          en proporción a la señal de error, que es la diferencia entre la señal 
+                          deseada y la señal actual, y también en proporción a la derivada de la
+                           señal de error, que es la tasa de cambio de la señal de error en el 
+                           tiempo.
+                    </p>
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                        La acción de control esta definida por:
+                        \[ u(t)=K_p e(t) + K_p T_d \frac{de(t)}{dt} \]
+                        La función de transferencia es:
+                        \[ \frac{U(s)}{E(s)}=K_p(1+T_d s) \]
+                        Donde \(T_d\) es el <i>Tiempo derivativo</i>
+                    </p>
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                        Antes, el control derivativo se utilizaba de manera individual en sistemas de 
+                        control. Sin embargo, combinar el controlador derivativo con un controlador 
+                        proporcional genera un sistema más eficiente, ya que elimina las desventajas
+                         asociadas con el controlador derivativo al combinarlo con el controlador 
+                         proporcional.
+                    </p>
+                </td>
+              </tr>
+              <tr>
+                <td class="tg-0lax">
+                    Acción de control proporcional más integral más derivativo.
+                </td>
+                <td class="tg-0lax">
+                    Un controlador PID es un tipo de controlador que se utiliza en sistemas
+                    de control para ajustar la salida de manera proporcional a la señal de error
+                     y a la derivada de la señal de error. Esto permite que el sistema de control
+                      se ajuste de manera más precisa y efectiva para mantener la salida deseada.
+                </td>
+                <td class="tg-0lax">
+                    <p>
+                        La ecuación de control  con esta acción combinada es:
+                        \[ u(t)=K_p e(t)+\frac{K_p}{T_i}\int_{o}^{t}e(t)dt +K_p T_d \frac{de(t)}{dt} \]
+                        La función de transferencia es:
+                        \[ \frac{U(s)}{E(s)}=K_p \left( 1+\frac{1}{T_i s}+T_d s \right) \]
+                        Donde \(K_p\) es la ganancia proporcional, \(T_i\) es el tiempo integral y 
+                        \( T_d\) es el tiempo derivativo.
+                    </p>
+                </td>
+                <td class="tg-0lax">
+                    El diagrama de bloque es:
+                    <figure class="imagen">
+                        <img src="assets/SVG/Control0_13.svg" alt="Diagrama_bloque_PID" height=200px>
+                        <figcaption>Diagrama de bloque del controlador PID</figcaption>
+                    </figure>
+                </td>
+              </tr>
+            </tbody>
+            </table>
+
     </div>
 
-<script src="https://github.com/hernandojDeAvil4/ControlClasico/blob/f1e0fa885eb8a908023ed3ce955909614554f725/Control_clasico.js"></script>
-
- <!--   <script>
-        var canvas = document.getElementById("myCanvas");
-        var ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#FF0000";
-        ctx.fillRect(0,0,150,75);
-    </script>
--->
 
 </div>
+
+<script src="/Javas/ControlC.js"></script>
+<script src="/Javas/prism.js"></script>
 </body>
 </html>

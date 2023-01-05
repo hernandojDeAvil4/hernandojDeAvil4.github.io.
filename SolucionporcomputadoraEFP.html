@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <style>
+        h1 {text-align: center;}
+        h2 {text-align: center;}
+        h3 {text-align: left;}
+        h4 {text-align: left;}
+        p {text-align: justify;}
+        div{font-family: 'Courier New', Courier, monospace;}
+        .ejemplo{ background-color: darkgreen;}
+        nav{ background-color: rgb(147, 174, 106);}
+       </style>
+    <title>La transformada de Laplace</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <!--<link type="text/css" href="/css/notes-all.css" rel="stylesheet">-->
+    <!--
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    -->
+    <nav>
+        <ul>
+            <li> <a href="Transformalda_Laplace.html">La transformada de Laplace</a></li>
+            <li><a href="LaplaceANDEcuacionesDiferenciales.html">Aplicación de la transformada de laplace a la solución
+                de ecuaciones diferenciales ordinarias lineales.</a></li>
+                <li> <a href="LaTransformadaZ.html">La transformada z</a> </li>
+                <li><a href="ModeladoMatematicodeSistemasControl.html">
+                    Modelado Matemático de sistemas de control</a></li>
+        </ul>
+    </nav>
+    </head>
+    <body>
+        <div>
+            <h1>Solución por computadora de la expansión en fracciones parciales</h1>
+            <div> <h2>Introducción</h2>
+                <p>Existen muchos lenguajes de cómputo de alto nivel que pueden ser utilizados 
+                    para encontrar la solución de la transformada inversa de Laplace, MATLAB es
+                     el más popular de estos. No obstante, también se puede implementar Python 
+                     para encontrar la solución. En esta sección veremos cómo se puede instalar 
+                     la librería Sympy para trabajar con soluciones simbólicas dentro de Python 
+                     y como solucionar la transformada inversa de Laplace. </p>
+            </div>
+        </div>
+        
+        <div>
+            <h3>Instalación de Python:</h3>
+            <p>
+                Primero debemos descargar Python, esto lo podemos hacer directamente desde la 
+                <a href="https://www.python.org/">página oficial</a>  (asegúrese de descargarlo de 
+                acuerdo a su
+                <a href="https://edu.gcfglobal.org/es/informatica-basica/sistemas-operativos-para-el-computador/1/">sistema  operativo</a>, en el caso de 
+                Windows se puede descargar desde Microsoft Store, pero esta versión suele estar 
+                desactualizada). Luego de instalar Python se recomienda instalar una interface de 
+                usuario, la instalación ya debe tener una, pero no suele ser muy cómodo realizar 
+                depuración de código con este. Entre algunos interfaces que recomiendan los usuarios 
+                se encuentra:
+                <ol>
+                    <li><a href="https://pypi.org/project/PyQt5/">PyQt5</a></li>
+                    <li><a href="https://www.wxpython.org/">wxPython</a></li>
+                    <li><a href="https://www.csse.canterbury.ac.nz/greg.ewing/python_gui/">PyGUI</a></li>
+                    <li> <a href="https://code.visualstudio.com/">Visual Estudio Code</a></li>
+                </ol>
+                Otra opción muy recomendada es instalar <a href="https://docs.conda.io/en/latest/">Conda</a>
+                el cual tiene muchas librerías predeterminadas.
+            </p>
+        </div>
+
+
+        <div>
+            <h3>Instalación de Sympy</h3>
+            <p>
+                Se puede instalar la librería Sympy de dos formas:
+                <ul>
+                    <li>Descargar el archivo comprimido de su 
+                        <a href="https://www.sympy.org/es/">pagina oficial</a></li>
+                    <li>Instalar Sympy en el sistema con el comando <b>pip</b></li>
+                </ul>
+            </p>
+            <p>
+                Para instalarlo mediante el comando <b>pip</b> solo se necesita introducir los 
+                siguientes comandos en
+                 <a href="https://computerhoy.com/noticias/software/windows-10-abrir-consola-comandos-74197">command prompt windows</a>
+                  o <a href="https://www.neoguias.com/como-abrir-terminal-ubuntu/">terminal Linux</a>:
+                <ol>
+                    <li>python -m pip install --upgrade pip</li>
+                    <li>pip3 install sympy</li>
+                </ol>
+                En este punto ya debería tener instalada la librería si por alguna razón acontece
+                 un problema con el comando <b>pip</b> recomiendo visitar 
+                <a href="https://www.activestate.com/resources/quick-reads/how-to-install-pip-on-windows/#:~:text=One%20of%20the%20most%20common,the%20command%20to%20launch%20it.">How To Install Pip On Windows</a>
+            </p>
+        </div>
+
+
+        <div>
+            <h3>Expansión de fracciones parciales</h3>
+            <p>
+                Para realizar la expansión por fracciones parciales de una función racional:
+                <div>
+                    <br>Primero se importan las librerías necesarias:
+                    <br><img src="Sympy_GUIDE_01.png" alt="Librerias">
+                    <br> Donde <span style="color: rgb(77, 201, 173);">sympy.abc</span>
+                    exporta todas las letras en griego y latino como simbolos.
+                    Definimos una función racional \( G(s) \):
+                    \[ G(s)=\frac{3s+2}{s(s^2 +4)} \]
+                    <br><img src="Sympy_GUIDE_02.png" alt="Funcion_Racional">
+                    <br>Luego se realiza la expansión por fracciones parciales 
+                    <br><img src="Sympy_GUIDE_03.png" alt="Expansion_fracciones">
+                    <br>Finalmente se resuelve la transformada inversa de Laplace
+                    <br><img src="Sympy_GUIDE_04.png" alt="Expansion_fracciones">
+                    <br>Se puede imprimir el resultado final con:  
+                    <br><img src="Sympy_GUIDE_05.png" alt="print">
+                    <br>Esto da como resultado:
+                    <br><img src="Sympy_GUIDE_07.png" alt="print">
+                    \[ \frac{u(t)}{2} \left (3\textrm{sen}(2t)- \textrm{cos}(2t) +1  \right ) \]
+                    donde \( u(t) \) representa la función escalón.
+                </div>
+                El código final queda de la siguiente forma: 
+                <br><img src="Sympy_GUIDE_06.png" alt="print">
+            </p>
+
+
+        </div>
+
+        <div>
+            <a href="LaplaceANDEcuacionesDiferenciales.html">En la siquiente sección vera el tratamiento de la
+                transformada de Laplace para la solución de ecuaciones diferenciales 
+                ordinarias lineales. 
+            </a>
+        </div>
+
+    </body>
+</html>

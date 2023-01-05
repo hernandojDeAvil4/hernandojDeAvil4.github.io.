@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+    <style>
+    h1 {text-align: center;}
+    h2 {text-align: center;}
+    h3 {text-align: left;}
+    h4 {text-align: left;}
+    p {text-align: justify;}
+    div{font-family: 'Courier New', Courier, monospace;}
+    .ejemplo{ background-color: darkgreen;}
+    nav{ background-color: rgb(147, 174, 106);}
+    .teorema{background-color: aquamarine;}
+   </style>
+
+  <title>La transformada de Laplace</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+    <!--<link type="text/css" href="" rel="stylesheet">-->
+<nav>
+    <ul>
+        <li> <a href="Transformalda_Laplace.html">La transformada de Laplace</a></li>
+        <li> <a href="SolucionporcomputadoraEFP.html">
+            Solución por computadora de la expansión en fracciones parciales
+        </a> </li>
+        <li><a href="LaplaceANDEcuacionesDiferenciales.html">Aplicación de la transformada de laplace a la solución
+            de ecuaciones diferenciales ordinarias lineales.</a></li>
+        <li><a href="ModeladoMatematicodeSistemasControl.html">
+            Modelado Matemático de sistemas de control</a></li>
+    </ul>
+</nav>
+
+</head>
+<body>
+<div style="font-family: Courier New">
+    
+    <h1>La transformada \(z\)</h1>
+
+    <div>
+        <h2>Introducción</h2>
+        La transformada z se presenta como método operacional para resolver ecuaciones en diferencias
+        lineales y sistemas lineales con datos discretos o digitales. 
+    </div>
+
+    <div>
+        <h3>Definición de transformada \(z\)</h3>
+        <p>
+            Considere la secuencia \( y(k), k=0,1,2,\cdots \), en donde \( y(k) \) puede representar
+            una secuanecia de números o eventos. La transformada \( z \) de \( y(k) \) está definida
+            como:
+            \[  Y(z)=\textrm{ transformada }z \: \: \textrm{de} \: \: y(k)=\mathscr{L}[y(k)]=
+            \sum_{k=0}^{ \infty } y(k)z^{-k} \] 
+            Donde \( z \) es una variables compleja.
+        </p>
+    </div>
+
+    \<div class="ejemplo">
+        \<h3>Ejemplo 1:</h3>
+        <p>
+            Considere la ecuación:
+            \[ y(k)=e^{-\alpha k} \: \: \: k=0,1,2,\cdots \]
+            Donde \( \alpha \) es una constante real. Aplicando la transformada z:
+            \[Y(z)=\sum_{k=0}^{ \infty } y(k)z^{-k}=\sum_{k=0}^{ \infty }e^{-\alpha k} z^{-k} \] 
+            \[ Y(z)=1+ e^{-\alpha}z^{-1}+e^{-2\alpha}z^{-2}+e^{-3\alpha}z^{-3}+\cdots \]
+            Esta serie converge en \( |e^{-\alpha}z^{-1}|< 1 \). Se soluciona para \( Y(z) \)
+            multiplicando por \( e^{-\alpha}z^{-1} \) y luego restando el resultado.
+            \[ e^{-\alpha}z^{-1}Y(z)=e^{-\alpha}z^{-1}(1+ e^{-\alpha}z^{-1}+
+            e^{-2\alpha}z^{-2}+e^{-3\alpha}z^{-3}+\cdots) \] 
+            \[ e^{-\alpha}z^{-1}Y(z)= e^{-\alpha}z^{-1}+ e^{-2\alpha}z^{-2}+
+            e^{-3\alpha}z^{-3}+e^{-4\alpha}z^{-4}+\cdots   \]
+            \[\begin{split} 
+            Y(z)- e^{-\alpha}z^{-1}Y(z)= 1+ e^{-\alpha}z^{-1}+
+            e^{-2\alpha}z^{-2}+e^{-3\alpha}z^{-3}+\cdots-e^{-\alpha}z^{-1}+ e^{-2\alpha}z^{-2}+
+            e^{-3\alpha}z^{-3}+e^{-4\alpha}z^{-4}+\cdots
+            \end{split}\]
+            \[ Y(z)(1-e^{-\alpha}z^{-1})=1  \]
+            \[ Y(z)=\frac{1}{1-e^{-\alpha}z^{-1}}=\frac{z}{z-e^{-\alpha}}  \]
+        </p>
+    </div>
+
+    <div class="ejemplo">
+        <h3>Ejemplo 2:</h3>
+        <p>
+            Continuando con el ejemplo anterior, si \( \alpha=0 entonces \):
+            \[  y(k)=e^{-\alpha k}=e^{0 k}=1 \: \: \: k=0,1,2,3,.. \]
+            Esto representa una secuencia de unos, por tanto la transformada \(z\) queda:
+            \[ Y(z)=1+z^{-1}+z^{-2}+ \cdots =\frac{z}{z-1}  \]
+            Converge para \(|z|>1\)
+        </p>
+    </div>
+
+    <div>
+        <h3>Relación entre la transformada de Laplace y la transformada \(z\)</h3>
+        <p>
+            Se puede entender la secuencia \( y(kT)\), \( k=0,1,2,3\cdots \) como un tren de
+            impulsos separado por el intervalo de tiempo \( T \) (definido como 
+            <b>periodo de muestreo</b> ). El impulso del \(k-ésimo\) instante, \(\delta(t-Kt) \),
+            lleva el valor de \( y(kT) \). Esto se presenta muy a menudo en situaciones donde 
+            la señal \( y(t)\) se digitaliza o se muestrea cada \( T \) segundos. Por tanto, 
+            se puede relacionar la secuencia \( y(kT) \) con una señal que se puede expresar como:
+            \[ y^*(t)=\sum_{t=0}^{\infty} y(kT)\delta(t-Kt)\]
+            Al tomar la transformada de Laplce en ambos miembros de la ecuación:
+            \[  \mathscr{L} \left[ y^*(t) \right]=
+            \mathscr{L} \left[ \sum_{t=0}^{\infty} y(kT)\delta(t-Kt) \right]  \]
+            Aplicadno el teorema 5 y la definición de la transformada \( z \):
+            \[\mathscr{L}\left[ f(t-T)u_s(t-T) \right] =e^{-Ts}F(s)  \]
+            Entonces:
+            \[Y*(s)=\sum_{t=0}^{\infty} y(kT)e{-kTs} \]
+            La transformada \( z\) se relaciona con la transformada de Laplace porque:
+            \[ z=e^{Ts} \]
+            Se puede resumir la transformada \( z\) en casoso de sistemas muestrados como:
+            \[ Y(z)=\mathscr{L}[y(kT)]=\mathscr{L}[y^{*}(t)]=\mathscr{L}[Y^{*}(s)]=
+            Y^{*}(s)\Big|_{z=e^{Ts}} \]
+            O tambien se puede escribir como:
+            \[ Y(z)=\mathscr{L}[y(t)]=\mathscr{L}[Y(t)] \]   
+
+        </p>
+    </div>
+
+    <div class="ejemplo">
+        <h3>
+            Ejemplo 3:
+        </h3>
+        <p>
+            Considere la función de tiempo:
+            \[  y(t)=e^{-\alpha t}u_s(t) \]
+            La transformada \(z\) de \( y(t) \) se obtiene realizando los siguientes pasos:
+            \<ol>
+                <li>
+                    Representar los valores de \( y(t)\) en los instantes \( t=kT \), \( k=0,1,2,\cdots \)
+                    para formar la función \( y^{*}(t) \):
+                    \[ y^{*}(t)=\sum_{k=0}^{\infty} e^{-\alpha kT}\delta (t-kT) \]
+                </li>
+                <li>
+                    Obtenga la transformada de Laplace en ambos lados de la ecuación anterior:
+                    \[ Y^{*}(s)=\sum_{k=0}^{\infty}e^{-\alpha kT}e^{-kTs}=
+                    \sum_{k=0}^{\infty}e^{-(s+\alpha)kT} \]
+                </li>
+                <li>
+                    Exprese \( Y^{*}(s) \)en forma compacta y aplique la ecuación \( z=e^{Ts}  \)
+                    para obtener la transformada \( z \).
+                    \[ Y(z)=\frac{z}{z-e^{-\alpha T}} \]
+                </li>
+            </ol> 
+        </p>
+    </div>
+
+    <div>
+        <h2>Teoremas importantes de la transformada \( z \)</h2>
+    </div>
+
+    <div class="teorema">
+        <h3>Teorema 1: Suma y resta</h3>
+        <p>
+            Si \( y_{1}(kT)\) y \( y_{2}(kT)\) tiene transformadas \(z \),\(Y_{1}(z)\) y \(Y_{2}(z)\)
+            respectivamente, entonces: 
+            \[ \mathscr{L}[y_{1}(kT) \pm y_{2}(kT)]=Y_{1}(z) \pm Y_{2}(z)  \]    
+        </p>
+    </div>
+
+    <div class="teorema">
+        <h3>Teorema 2: Multiplicación por una constante</h3>
+        <p>
+            \[ \mathscr{L}[\alpha y(kT)]=\alpha\mathscr{L}[y(kT)]=\alpha Y(z)  \]    
+        </p>
+    </div>
+
+    <div class="teorema">
+        <h3>Teorema 3: Traslación real(retraso y adelanto en el tiempo)</h3>
+        <p>
+            \[ \mathscr{L}[y(kT-nT)]=z^{-n}Y(z)  \]    
+            y
+            \[ \mathscr{L}[y(kT+nT)]=z^{n}\left[Y(z)-
+            \sum_{k=0}^{n-1}y(kT)z^{-k}  \right] \]   
+        </p>
+    </div>
+
+    <div class="teorema">
+        <h3>Teorema 4: Traslación compleja</h3>
+        <p>
+            \[ \mathscr{L}[e^{\mp \alpha kT}y(kT)]=Y(ze^{\pm \alpha T}) \]     
+            En donde \( \alpha \) es una constante. \( Y(z) \) es la transformada \(z \) de 
+            \(y(kT)).
+        </p>
+    </div>
+
+    <div class="teorema">
+        <h3>Teorema 5: Teorema de valor inicial</h3>
+        <p>
+            \[ \lim_{k\rightarrow 0}y(kT)=\lim_{z\rightarrow \infty}Y(z) \]
+            Si existe el limite.
+        </p>
+    </div>
+
+    <div class="teorema">
+        <h3>Teorema 6: Teorema del valor final.</h3>
+        <p>
+            \[ \lim_{k\rightarrow \infty} y(kT)=\lim_{z\rightarrow 1}(1-z^{-1})Y(z) \]
+            Si la función \( (1-z^{-1})Y(z) \) no tiene polos sobre o fuera del círculo unitario
+            \( |z|=1 \) en el plano \( z \).
+        </p>
+    </div>
+
+    <div class="teorema">
+        <h3>Teorema 7: Convolución real.</h3>
+        <p>
+            \[\begin{split} 
+            Y_{1}(z)Y_{2}(z)=\mathscr{L}\left[ \sum_{k=0}^{N}y1(kT)y2(NT-kT) \right]=
+            \mathscr{L}\left[ \sum_{k=0}^{N} y_{2}(kT)y_{1}(NT-kT) \right]=
+            \mathscr{L}\left[ y_{1}(kT)*y_{2}(kT) \right]
+            \end{split} \]
+            En donde \( * \) Denota la convolución real en el dominio del tiempo.
+        </p>
+    </div>
+
+    <div>
+        <p>
+            Una tabla de transformadas \(z\) y propiedades importantes se puede encontrar 
+            <a href="https://www.projectrhea.org/rhea/index.php/Z_Transform_table">aquí:</a>
+        </p>
+    </div>
+
+    \<div class="ejemplo">
+        <h3>
+            Ejemplo:4
+        </h3>
+        <p>
+            Se puede utilizar el <b>Teorema 4</b>  para encontrar la transformada \(z\) de
+            \( y(t)=te^{-\alpha t}, t\geq 0\). Sea \( f(t)=t,t\geq 0 \); entonces:
+            \[ F(z)=\mathscr{L}[t u_s (t)]=\mathscr{L}(kT)=\frac{Tz}{(z-1)^2} \] 
+            Utilizando el teorema:
+            \[ Y(z)=\mathscr{L}[te^{-\alpha t}u_{s}(t)]=F(ze^{\alpha T})=
+            \frac{Tze^{-\alpha T}}{(z-e^{-\alpha T})^{2}} \]
+        </p>
+    </div>
+
+    <div class="ejemplo">
+        <h3>
+            Ejemplo:5
+        </h3>
+        <p>
+            <b>Teorema 6</b>, dada la función: 
+            \[ Y(z)=\frac{0.79z^2}{(z-1)(z^2 - 0.416z + 0.208)} \]
+            Se puede determinar el valor de \( y(kT)\) cuando \( k\rightarrow \infty \)
+            ya que la función \( (1-z^{-1})Y(z) \) no tiene ningún polo sobre o fuera del círculo 
+            unitario \( |z|=1 \) en el plano \( z \). Por tanto:
+            \[ \lim_{k\rightarrow \infty}y(kT)=\lim_{z\rightarrow 1}
+            \frac{0.79z^2}{(z^2 - 0.416z + 0.208)}=1 \] 
+        </p>
+    </div>
+
+    <div>
+        <h2>La transformada \( z \) inversa</h2>
+        <p>
+            Así como la transformada de Laplace, uno de los objetivos principales de la 
+            transformada  \( z \) es que la manipulación algebraicas se puedan realizar
+            primero en el dominio \( z \), y después la respuesta en tiempo se determina 
+            mediante la transformada \( z\) inversa. En general la transformada \(z\) inversa
+            de una función \( Y(z) \) <i>proporciona información sólo osbre </i> \( y(kT)\), 
+            <i>y no sobre</i> \( y(t) \). Portanto este tipo de transformada proporciona información
+            solamente en los momentos de muestreo. La transformada \(z\) se puede obtener mediante
+            uno de los trés métodos siguientes:
+            \<ol style="background-color: grey;">
+                <li>
+                    Expansión en fracciones parciales.
+                </li>
+                <li>
+                    Método de la serie de potencias. 
+                </li>
+                <li>
+                    La fórmula de inversión.
+                </li>
+            </ol>    
+        </p>
+    </div>
+
+    <div>
+        <h3>Método de expansión en fracciones parciales </h3>
+        <p>
+            La transformada se puede expandir en una suma de términos sencillos reconocibles, y la
+            tabla de transformadas \( z\) se utiliza para determinar la \( y(kT) \) correspondiente.
+            La función \( Y(z)\) se expande en la forma:
+            \[ Y(z)=\frac{K_{1}z }{z-e^{-\alpha T} } + \frac{K_{2}z }{z-e^{-\beta T} }+\cdots \]
+            
+            Para esto, primero se debe expandir \(Y(z)/z \) en fracciones y después multiplicar por 
+            \(z\) para obtener la expresión final. El siguiente ejemplo ilustra este procedimiento.  
+        </p>
+    </div>
+
+    <div class="ejemplo">
+        <h3>Ejemplo: 6 </h3>
+        <p>
+            Dada la función de la transformada \(z\):
+            \[ Y(z)=\frac{(1-e^{-\alpha T} )z}{ (z-1)(z-e^{-\alpha T} ) } \]
+            Se desea encontrar \(z\) inversa. Al expandir \(Y(z)/z \) mediante fracciones parciales:
+            \[ \frac{Y(z)}{z}=\frac{1}{z-1}-\frac{1}{z-e^{-\alpha T} } \]
+            La expresión final expandida para \( Y(z) \) es:
+            \[ Y(z)=\frac{z}{z-1}-\frac{z}{z-e^{-\alpha T} } \]
+            En la tabla de transformadas \(z\) que puede encontrar
+            \<a href="https://www.projectrhea.org/rhea/index.php/Z_Transform_table">aquí</a> se determina la transformada inversa:
+            \[ y(kT)=1-e^{-\alpha kT} \: \: \: k=0,1,2,3,\cdots \] 
+        </p>
+        
+    </div>
+
+    <div class="ejemplo">
+        <h3>Ejemplo: 7</h3>
+        <p>
+            Considere la función:
+            \[ Y(z)=\frac{ (1-e^{-\alpha T}) }{ (z-1)(z-e^{-\alpha T} ) } \]
+            La cual no contiene ninguna  potencia de \(z\) como factor en el numerador.
+            En este caso, la expansión en fracciones parciales de \( Y(z) \) se realiza 
+            directamente:
+            \[ Y(z)=\frac{1}{z-1} - \frac{1}{z-e^{-\alpha T} } \]
+            La transformada del primer termino es:
+            \[ \mathscr{L}^{-1}\left[ \frac{1}{z-1} \right]=
+            \mathscr{L}^{-1}\left[ z^{-1}\frac{z}{z-1} \right]=\sum_{k=1}^{\infty}z^{-1}=
+            u_{s}[(k-1)T] \: \: \: k=1,2,3,\cdots \] 
+            Por otro lado, el segundo miembro de la ecuación se puede identificar como el retraso
+            de \[T \] segundos. La transformada \(z\) inversa de \(Y(z)\) es:
+            \[ y(kT)=(1-e^{-\alpha(k-1)T})u_{s}[(k-1)T] \: \: \: k=1,2,3,\cdots \]  
+        </p>
+    </div>
+
+    <div>
+        <h3>Método de las series de potencias:</h3>
+        <p>
+            La definición de la transformada \(z\):
+            \[  Y(z)=\textrm{ transformada }z \: \: \textrm{de} \: \: y(k)=\mathscr{L}[y(k)]=
+            \sum_{k=0}^{ \infty } y(k)z^{-k} \] 
+            Proporciona un método directo para realizar la transformada \(z\) inversa. Se puede ver
+            claramente que, el coeficiente de \(z^{-k}\) en \(Y(z)\) es simplemente y(kT). Por tanto, 
+            si \(Y(z) \) se expande en una serie de potencias de \( z^{-k} \), se pueden encontrara 
+            los valores de \(y(kT)\) para \(k=0,1,2,\cdots \) 
+        </p>
+    </div>
+
+    <div class="ejemplo">
+        <h3>Ejemplo: 8</h3>
+        <p>
+            Considere la ecuació:
+            \[ Y(z)=\frac{(1-e^{-\alpha T} )z}{ (z-1)(z-e^{-\alpha T} ) } \]
+            Se puede expandir en una serie de potencias de \(z^{-1}\) al dividir el polinomio 
+            numerador entre el polinomio denominador mediante una
+            <a href="https://www.youtube.com/watch?v=AoVtKOHRhhs">divsión larga</a>:
+            \[ (z-1)(z-e^{-\alpha T} ) \lfloor{(1-e^{-\alpha T} )z} \]
+            Esto da como resultado:
+            \[ z(1-e^{-\alpha T})  \: \: \: \textrm{Residuo}=0 \]
+            Se puede expandir esta expresión en una serie de potencia de \(  z^{-1}\):
+            \[ Y(z)=(1-e^{-\alpha T})z^{-1}+(1-e^{-2\alpha T})z^{-2}+\cdots+
+            (1-e^{-k\alpha T})z^{-k}+\cdots \]
+            Es evidente que:
+            \[ y(kT)=1-e^{-\alpha kT} \: \: \:  k=0,1,2,\cdots \] 
+
+        </p>
+    </div>
+
+
+
+    <div>
+        <h3>
+            Aplicación de la transformada \(z\) a la solución de ecuaciones en diferencias lineales.
+        </h3>
+        <p>
+            La transformada \(z\) se puede emplear para resolver ecuaciones en <b>diferencias lineales</b>. Como
+            un ejemplo simple, considere la ecuación de primer orden sin exitación:
+            \[ y(k+1)+y(k)=0 \]
+            Primero se toma la transformada \(z\) en ambos miembros de la ecuación, es decir se multiplica por 
+            \(z^{-k}\) y se toma la suma desde \(k=0\) hasta \(k=\infty\):
+            \[ \sum_{k=0}^{\infty} y(k+1)z^{-k}+ \sum_{k=0}^{\infty} y(k)z^{-k}=0 \]
+            Implementando el \<b>Teorema 3</b> la ecuación se escribe como: 
+            \[ z[Y(z)-y(0)]+Y(z)=0 \]
+            Resolviendo para \( Y(z) \), se obtiene:
+            \[ Y(z)=\frac{z}{z+1}y(0) \]
+            La transformada \(z\) inversa se puede obtener mediante la expansión de \( Y(z) \) en una serie
+            de potencias en \(  z^{-1} \) a traves de la división larga:
+            \[ Y(z)=(1-z^{-1}+z^{-2}-z^{-3}+\cdots)x(0) \]
+            Por tanto, \( y(k) \) se escribe como:
+            \[ y(k)=(-1)^{k}y(0) \: \: \: k=0,1,2,\cdots \]
+            Esta ecuación se conoce como una ecuación de estado de primer orden.     
+        </p>
+    </div>
+
+    <div class="ejemplo">
+        <h3>Ejemplo: 9</h3>
+        <p>
+            Considere la ecuación en diferencia de segundo orden:
+            \[ y(k+2)+0.5y(k+1)+0.2y(k)=u(k) \]
+            en donde:
+            \[ u(k)=u_{s}(k)=1 \: \: \: \textrm{para} \: \: \:  k=0,1,2,3,\cdots \]
+            Las condiciones iniciales son:
+            \<ol>
+                <li>
+                    y(0)=0
+                </li>
+                <li>
+                    y(1)=0
+                </li>
+            </ol> 
+            Realizando la transformada \(z\) en ambos miembros de la ecuación, se obtiene:
+            \[ [z^2 Y(z)-z^2 y(0)-zy(1)]+0.5[zY(z)-zy(0)]+0.2Y(z)=U(z) \]
+            La transformada de \( U(z)=z/(z-1) \). Al sustituir las condiciones iniciales de 
+            \(y(k)\), la expresión \( U(z) \) y resolviendo para \( Y(z) \), se obtiene:
+            \[ Y(z)=\frac{z}{(z-1)(z^2 + 0.5z +0.2)} \]
+            La expresión en fracciones parciales de \( Y(z)/s \) es:
+            \[ \frac{Y(z)}{z}=\frac{0.588}{z-1}-\frac{1.036e^{j1.283}}{z+0.25+j0.37}-\frac{1.036e^{-j1.283}}{z+0.25-j0.37} \]
+            Multiplicando por \(z\) y aplicando la transformada inversa de \(Y(z)\), se obtiene:
+            \[ y(k)=0.588-1.036(0.447)^{k}[e^{-j(2.165k-1.283)}+e^{j(2.165k-1.283)} ]=  \]
+            \[ y(k)=0.588-2.072(0.447)^{k}\textrm{cos}(2.165k-1.283) \: \: \: k\geq 0 \]
+        </p>
+    </div>
+    
+
+</div>
+</body>
+</html>

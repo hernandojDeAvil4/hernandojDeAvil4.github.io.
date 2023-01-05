@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <style>
+    h1 {text-align: center;}
+    h2 {text-align: center;}
+    h3 {text-align: left;}
+    h4 {text-align: left;}
+    p {text-align: justify;}
+    div{font-family: 'Courier New', Courier, monospace;}
+    .ejemplo{ background-color: darkgreen;}
+    nav{ background-color: rgb(147, 174, 106);}
+   </style>
+  <title>La transformada de Laplace</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <!--<link type="text/css" href="/css/notes-all.css" rel="stylesheet">-->
+  <nav>
+    <ul>
+        <li> <a href="SolucionporcomputadoraEFP.html">Solución por computadora de 
+            la expansión en fracciones parciales</a></li>
+        <li> <a href="LaplaceANDEcuacionesDiferenciales.html">Aplicación de la transformada de laplace a la solución
+        de ecuaciones diferenciales ordinarias lineales.</a></li>
+        <li> <a href="LaTransformadaZ.html">La transformada z</a></li>  
+        <li><a href="ModeladoMatematicodeSistemasControl.html">
+          Modelado Matemático de sistemas de control</a></li>
+    </ul>
+</nav>
+</head>
+<body>
+<div style="font-family: Courier New">
+ <h2 align="center">Introducción</h2>
+ <p align="justify">La transformada de laplace esuna de las erramientas matematicas utilizadas para la solución de ecuaciones diferenciales
+    ordinarias lineales. En comparación con el método clásico de resolución de ecuaciones diferenciales lineales,
+    La transformada de laplace tiene dos caracteristicas atractivas. 
+ </p>
+ <p><ol style="color:rgb(34, 65, 219)">
+    <li align="justify">La solución de la ecuación homogénea y la solución particular se obtienen de una sola operación.</li>
+    <li align="justify">La transformada de Laplace convierte la ecuación diferencial en una ecuación algebraica
+        en \(s\). La solución final se obtiene tomando la transformada inversa de Laplace.  
+    </li>
+</ol></p>
+<h2 align="center">Definición</h2>
+<p align="justify";>Dada la función \(f(t)\) que satisface la condición: 
+    \<div style="background-color: rgb(217, 235, 178);">\[ \int_{0}^{\infty} \left |  f(t)e^{\sigma t}    \right | dt < \infty  \]</div> 
+    Para alguna \( \sigma \) real finita, la transformada de Laplace de \( f(t) \) se define como:
+    <div style="background-color: rgb(217, 235, 178);">\[ F(s)=\int_{0}^{\infty} f(t)e^{-s t}dt \]</div>
+    o 
+    <div style="background-color: rgb(217, 235, 178);">
+    \[ F(s)=\text{Transformada de Laplace}= \mathscr{L}[f(t)]\]</div>
+  \( s=\sigma + j\omega \) es una variable compleja y se denomina el <b>operador Laplace</b>. Por otro lado,
+  la expreción \( \int_{0}^{\infty} f(t)e^{-s t}dt  \) tambien se conoce como <b>Transformada de Laplace unilateral</b>
+  ya que la integral se evalúa desde \( t=0 \) hasta \( \infty\). Lo que indica que la
+  información antes de \( t=0 \) se ignora. Normalmente norea requerido utilizar
+  la forma integral de la transformada puesto que, estas expresiones ya estan 
+  tabuladas en tablas o se pueden encontrar utilizando librerias matematicas en
+   <a href="https://www.mathworks.com/products/matlab.html">MATLAB</a> o 
+   <a href="https://www.python.org/">Python</a> .
+</p>
+
+<!-- Another Slice  -->
+<p>
+<h2 align="center";> Ejemplo 1</h2>
+Sea \( f(t) \) una función escalón unitario que se define como:
+\[ f(t)=\left\{\begin{matrix}
+u_s(t)=1 & t>0\\ 
+0 & t < 0
+\end{matrix}\right.  \]
+La transformada de Laplace se obtiene como:
+\[ F(s)= \mathscr{L}[u_s(t)]=\int_0^{\infty} u_s(t)e^{-st}dt=-\frac{1}{s}e^{-st}\Big|_{0}^{\infty}=
+\frac{1}{s} \] 
+esta ecuación es valida si:
+\[ \int_0^{\infty} \left | u_s(t)e^{-\sigma t}  \right |dt=
+\int_{0}^{\infty}\left | e^{-\sigma t}  \right |dt < \infty
+  \]
+  Significa que la parte real de \( s\) debe ser mayor que \(0\), en la practica
+  la transformada de Laplace de la función escalon se le indica como \( 1/s\),
+  y rara vez uno se tiene que preocupar por la región del plano \(s\) en donde la 
+  integral de la transformada converge absolutamente.     
+</p>
+<!-- Another Slice  -->
+<h2 align="center";> Ejemplo 2</h2>
+<p align="justify">
+Considere la función exponencial :
+\[f(t)=e^{-\alpha t}\ \ \ \ \ t\geq 0  \]
+Donde \( \alpha \) es una constante real. La transformada de laplace de 
+\( f(t) \) se describe como:
+ \[ F(s)=\int_0^{infty}e^{-\alpha t}e^{-s t}dt=\frac{e^{-(s+\alpha)t}}
+ {s+\alpha }\Big|_{0}^{\infty}=\frac{1}{s+\alpha} \]
+</p>
+
+<h2 align="center">Transformada inversa de Laplace</h2>
+<p align="justify">
+Dada la transformada de Laplace \(F(s) \), la operación para obtener 
+\( f(t)\) se denomina como la <b>transformada inversa de Laplace</b> que
+se denota por:
+\[ f(t)= \mathscr{L}^{-1}[F(s)] \] 
+La integral de la transformada inversa de Laplace se representa como:
+\[ f(t)=\frac{1}{2\pi j} \int_{c-j\infty}^{c+j\infty} F(s)e^{st}ds  \]
+
+\(c\) es un constante real mayor que las partes reales de todas las 
+<b>singularidades</b> de \( F(s)\). Dicha integral representa una integral
+de línea que se evalúa en el plano \(s\). Para funciones simples , la operación 
+de la transformada inversa de Laplace se puede llevar a cabo simplemente
+refiriendose a una tabla de transformadas de Laplace, tal como se muestra en 
+<a href="https://www.math.purdue.edu/~liu2053/Formula_sheets_for_final_exam.pdf">
+  Tabla de Transformada de Laplace de Purdue University
+</a>(en esta tabla el signo \(\mathscr{L} \) es reemplazado por \(\mathcal{L} \) ) 
+</p>
+
+<!-- Another Slice  -->
+<h2 align="center">Los teoremas importantes de la transformada de Laplace son:</h2>
+  <div style="background-color: aquamarine;">
+      <h3 align="center">Teorema 1:Multiplicación por una constante</h3>
+      <p align="justify">
+        sea \(k\) una constante y \(F(s)\) la transformada de Laplace de \(f(t)\)
+        Entonce:
+        \[\mathscr{L}[kf(t)]=kF(s) \]
+      </p>
+  </div>
+
+    <div style="background-color: aquamarine;">
+      <h3 align="center">Teorema 2:Suma y resta</h3>
+      <p align="justify">
+        sea \(F_1(s)\) y \(F_2(s)\) la transformada de Laplace de 
+        \( f_1(t) \) y \( f_2(t) \) respectivamente. Entonces:   
+        \[\mathscr{L}  \left[ f_1(t) \pm f_2(t)  \right] = F_1(s) + F_2(s)  \]
+      </p>
+    </div>
+
+    <div style="background-color: aquamarine;">
+      <h3 align="center">Teorema 3:Diferenciación</h3>
+      <p align="justify">
+        sea \(F(s)\) la transformada de Laplace de \(f(t)\), y \(f(0)\)
+        es el limite de \(f(t)\), cuando \(t\) tiende a cero. La transformada
+        de Laplace de la derivada con respecto al tiempo de \(f(t)\) es: 
+        \[\mathscr{L} \left[  \frac{df(t)}{dt}  \right]=sF(t)-\lim_{t \to 0}f(t)=sF(s)-f(0) \]
+      </p>
+    </div>
+
+    <div style="background-color: aquamarine;">
+      <h3 align="center">Teorema 3.5:Diferenciación caso general</h3>
+      <p align="justify">
+        En general para las derivadas de orden superior de \(f(t)\):
+
+        \[\mathscr{L}\left[ \frac{d^{n}f(t)}{dt^{n}} \right]=s^{n}F(s)-
+        \lim_{t \to 0}\left[ s^{n-1}f(t)+s^{n-2}\frac{df(t)}{dt} + 
+        \cdots +\frac{d^{n-1}f(t)}{dt^{n-1}} \right]=
+        s^{n}F(s)-s^{n-1}f(0)-s^{n-2}f^{1}(0)- \cdots -f^{n-1}(0) \]
+      </p>
+    </div>
+
+  <div style="background-color: aquamarine;">
+      <h3 align="center">Teorema 4:Integración</h3>
+      <p align="justify">
+      La transformada de Laplace de la primer integral de \(f(t)\) con respecto
+      al timepo, es la transformada de Laplace de \(f(t) \) dividida entre \(s\), esto es:
+      \[\mathscr{L}\left[ \int_0^{t}f(\tau)d\tau \right] =\frac{F(s)}{s}  \]
+      Por otro lado, para la integración del \(n-ésimo\) orden:
+      \[\mathscr{L}\left[ \int_0^{t_1}\int_0^{t_2} \cdots \int_0^{t_n}
+      f(\tau)dt_{\tau}dt_{1}dt_{2}\cdots dt_{n-1} \right] =\frac{F(s)}{s^n}  \]
+      </p>
+  </div>
+
+    <div style="background-color: aquamarine;">
+      <h3 align="center">Teorema 5:Traslación en el tiempo</h3>
+      <p align="justify">
+      La transformada de Laplace de \(f(t)\) retrasada en el tiempo \(T\) es igual
+      ala transformada de Laplace de \( f(t) \) multiplicada por \(e^{-Ts} \), esto es:
+      \[\mathscr{L}\left[ f(t-T)u_s(t-T) \right] =e^{-Ts}F(s)  \]
+      En donde \(u_s(t-T)\), denota la función escalón unitarió que está desplazada en el tiempo 
+      a la derecha por \(T\).
+      </p>
+    </div>
+
+    <div style="background-color: aquamarine;">
+      <h3 align="center">Teorema 6:Teorema del valor inicial</h3>
+      <p align="justify">
+      Si la transformada de Laplace de \(f(t)\) es \(F(s)\), entonces:
+      \[ \lim_{t \to 0}f(t)=\lim_{s \to \infty} sF(s) \]
+      si el límite existe.
+      </p>
+    </div>
+
+    <div style="background-color: aquamarine;">
+      <h3 align="center">Teorema 7:Teorema del valor final</h3>
+      <p align="justify">
+      Si la transformada de Laplace de \(f(t)\) es \(F(s)\), y si \(sF(s)\)
+      es analítica sobre el eje imaginario y en el semiplano derecho del plano \(s\), entoces:
+      \[ \lim_{t \to \infty}f(t)=\lim_{s \to 0} sF(s) \]
+      </p>
+    </div>
+
+    <div style="background-color: aquamarine;">
+      <h3 align="center">Teorema 8:Traslación compleja</h3>
+      <p align="justify">
+      La transformada de Laplace de \(f(t)\) multiplicada por 
+      \( e^{\pm \alpha t} \), donde \( \alpha \) es un constante, igual a la++
+      transformada de Laplace \( F(s)\), con \(s\) reemplazada por \(s \pm \alpha \), esto es:
+      \[ \mathscr{L} \left[ e^{\mp \alpha t}f(t) \right]=F(s \pm \alpha) \]
+      </p>
+    </div>
+
+    <div style="background-color: aquamarine;">
+      <h3 align="center">Teorema 9:Convolución real(multiplicación compleja)</h3>
+      <p align="justify">
+      Sea \(F_{1}(s)\) y \(F_{2}(s)\) las transformadas de Laplace de \(f_1(t)\) y \(f_2(t)\),
+      respectivamente, y que \(f_1(t)=0\),\(f_2(t)=0\), para \(t< 0\), entonces:  
+      \[  F_{1}(S)F_{2}(S)=\mathscr{L} \left[ f_1(t)*f_2(t) \right]=
+      \mathscr{L} \left[  \int_{0}^{t} f_1(\tau)f_2(t-\tau)d\tau  \right]=
+      \mathscr{L} \left[ \int_{0}^{t}f_2(\tau)f_1(t-\tau)d\tau  \right] \]
+      Donde el signo \(*\) denota la convolución en el dominio del tiempo.
+      </p>
+    </div>
+
+    <div style="background-color: rgb(220, 25, 25);">
+      <h3 align="center">Teorema 9:Aclaración importante sobre Convolución</h3>
+      <p align="justify">
+      Un factor importante por recordar es que la <i>la transformada inversa de Laplace
+      del producto de dos funciones en el dominio de \(s\), <b>NO</b> es igual al producto de las
+      dos funciones reales correspondientes en el dominio de \(t\):
+      </i>  
+      \[  \mathscr{L}^{-1} \left[ F_1(s)*F_2(s) \right] \neq f_1(t)f_2(t) \]
+      </p>
+    </div>
+
+    <div style="background-color: aquamarine">
+      <h3 align="center">Teorema 10: Convolución compleja(multiplicación real)</h3>
+      <p align="justify">
+      La multiplicación en el dominio real de \(t\) es equivalente a la convolución en el dominio 
+      complejo de \(s\):
+      \[  \mathscr{L} \left[ f_1(t)f_2(t) \right] = F_1(s)*F_2(s) \]
+      En este caso \(*\) denota la convolución compleja
+      </p>
+    </div>
+<!-- Expansion parcial Ojo -->
+    <div >
+      <h1 align="center">Laplace mediante la expansión en fracciones parcial</h1>
+      <h2 align="center">Introducción</h2>
+      <p align="justify">
+      Como ya se ha mencionado en las secciones anteriores, la mayoria de los probleas de sistemas de control, la transformada inversa de Laplace
+      que involucra funciones racionales se puede realizar mediante el empleo de tablas de transformada
+      de Laplace y la expansión en fracciones parciales. Esta ultima se puede realizar mediante el empleo
+      de lenguajes de computo de alto nivel. 
+      </p>
+    </div>   
+
+    <div >
+      <h3 align="center">Expansión en fracciones parciales</h3>
+      <p align="justify">
+      Cuando la solución mediante la transformada de Laplace de una ecuación diferencial es una 
+      función racional es \(s\), se puede describir como:
+      \[ G(s)=\frac{Q(s)}{P(s)} \]
+      En donde \( P(s)\) y \( Q(s)\) son polinomios en \(s\). Se supone que el gradi de \(P(s)\)
+      en \(s\) es mayor que el de \(Q(s)\). El polinomio \(P(s)\) se puede escribir como:
+      \[  P(s)=s^n + a_{n-1}s^{n-1} + \cdots + a_1 s +a_0 \]  
+      En donde \( a_0\), \( a_1\), \( \cdots \), \(a_{n-1} \) son coeficiente reales. Los metodos de
+      la expansión en fracciones parciales serán dados para casos de polinomios simples, polos de ordem 
+      multiple y polos complejos conjugados de \(G(s)\). 
+      </p>
+    </div>
+
+
+    <div>
+      <h4 align="left">\( G(s) \) Tiene polos simples</h4>
+      <p align="justify">
+       <b> Si todo los polos de \( G(s) \) son simples y reales </b>, la ecuación (2-40) se puede describir como:
+       \[  G(s)=\frac{Q(s)}{P(s)}=\frac{Q(s)}{(s+s_1)(s+s_2)\cdots (s+s_n) } \] 
+       En donde \(s_1 \neq s_2 \neq \cdots s_n \). Al aplicar la expansión en fracciones parciales 
+       la ecuación queda:
+       \[ G(s)=\frac{K_{s1} }{s+s_1} +\frac{K_{s2}}{s+s_2}+\cdots+\frac{K_{sn}}{s+s_n} \]
+
+      El coeficiente \( K_{si}(i=1,2,\cdots ,n) \) se determina al multiplicar ambos miembros de la ecuación
+      anterior por \( (s+s_1) \) y despues se hace que \( s\) sea igual a \( -s_i \)
+      </p>
+      <p align="justify">
+        Para encontrar el coeficiente \(K_{s1}\), por ejemplo, se multiplica por \( s+s_1 \)
+        y se hace \( s=-s_1 \) por lo que:
+        \[  G(s)=\frac{Q(s)}{P(s)}=\frac{Q(s)}{(s+s_1)(s+s_2)\cdots (s+s_n) } \] 
+        \[  (s+s_1) \frac{Q(s)}{P(s)}=(s+s_1) \frac{Q(s)}{(s+s_1)(s+s_2)\cdots (s+s_n) } \] 
+        \[  (s+s_1) \frac{Q(s)}{P(s)}=\frac{Q(s)}{(s+s_2)\cdots (s+s_n) } \] 
+        \[ K_{s1}= \left[ (s+s_1) \frac{Q(s)}{P(s)} \right] \big|_{s=-s_{1}}=
+        \frac{Q(-s_1)}{(s_2-s_1)(s_3-s_1)\cdots (s_n-s_1) } \] 
+      </p>
+    </div>
+
+
+    <div>  
+      <h4 align="left">Ejemplo:</h4>
+      <p style="background-color: darkgreen;">
+        <b>1:</b> Considere la función:
+        \[ G(s)=\frac{5s+3}{(s+1)(s+2)(s+3)}  \]
+        Se expande en fracciones parciales como:
+        \[  G(s)=\frac{K_{-1}}{s+1}+\frac{K_{-2}}{s+2}+\frac{K_{-3}}{s+3} \]  
+        Los coeficiente se determinan de la siguiente forma:
+        \[K_{-1}=[(s+1)G(s)]\Big|_{s=-1}=\frac{5(-1)+3}{ (-1+2 )(-1+3)}=-1 \]
+        \[K_{-2}=[(s+2)G(s)]\Big|_{s=-2}=\frac{5(-2)+3}{ (-2+1 )(-2+3)}=7 \]
+        \[K_{-3}=[(s+3)G(s)]\Big|_{s=-3}=\frac{5(-3)+3}{ (-3+1 )(-3+2)}=-6 \] 
+        Luego:
+        \[  G(s)=\frac{K{-1}}{s+1}\frac{K{-2}}{s+2}\frac{K{-3}}{s+3}= \] 
+        \[  G(s)=\frac{-1}{s+1}\frac{7}{s+2}\frac{-6}{s+3} \] 
+      </p>
+    </div>
+
+
+
+    <div>
+      <h4 align="left">\( G(s) \) Tiene polos de orden múltiple</h4>
+      <p align="justify">
+        Si \(r\) de los \(n\) polos de \(G(s) \) son idénticos, o se dice que el polo en \( s=-s_{i} \)
+        es de multiplicidad \( r\), \( G(s) \) se describe como:
+        \[   G(s)=\frac{Q(s)}{P(s)}= \frac{Q(s)}{(s+s_1)(s+s_2)\cdots (s+s_{n-r})(s+s_{i})^{r} } \]
+        \( i \neq 1,2,\cdots ,n-r \). Entonces G(s) se puede expandir como:
+        \[  \begin{split}
+        G(s)=\frac{K_{s1}}{s+s_1}+\frac{K_{s2}}{s+s_2}+\cdots +\frac{K_{s(n-r)}}{s+s_{n-r}}\\
+        \Big| \leftarrow n-r \textrm{ términos simples } \rightarrow \Big|\\
+        + \frac{A_{1}}{s+s_i}+\frac{A_{2}}{(s+s_i)^2}+\cdots + \frac{A_{r}}{(s+s_i)^r}\\
+        \Big| \leftarrow r \textrm{ términos de polos repetidos } \rightarrow \Big|\\
+        \end{split}\]
+
+        Los \( n-r \) coeficientes, \( K_{s1} \),\( K_{s2} \), \( \cdots \), \( K_{s(n-r)} \), que
+        corresponden a los polos simples, se pueden evaluar con el método:
+        \[ K_{s1}= \left[ (s+s_1) \frac{Q(s)}{P(s)} \right] \big|_{s=-s_{1}}=
+        \frac{Q(-s_1)}{(s_2-s_1)(s_3-s_1)\cdots (s_n-s_1) } \] 
+
+        Las ecuaciones para determinar los coeficientes que corresponden a los polos de orden múltiple
+        se describen como siguiente: 
+        
+        \[  A_{r}=[(s+s_i)^rG(s)] \Big|_{s=-s_i}  \]
+        \[  A_{r-1}=\frac{d}{ds}[(s+s_i)^rG(s)] \Big|_{s=-s_i}  \]
+        \[  A_{r-2}=\frac{1}{2!} \frac{d^2}{ds^2}[(s+s_i)^rG(s)] \Big|_{s=-s_i}  \]
+        \[ \vdots  \]
+        \[  A_{1}=\frac{1}{(r-1)!} \frac{d^{r-1}}{ds^{r-1}}[(s+s_i)^rG(s)] \Big|_{s=-s_i}  \]
+        
+      </p>
+    </div>
+
+
+    <div>
+    <h4 align="left">Ejemplo:</h4>
+      <p style="background-color: darkgreen;">
+        <b>2:</b> Considere la función:
+        \[ G(s)=\frac{1}{s(s+1)^{3}(s+2)}  \]
+        Se expande en fracciones parciales como:
+        \[  G(s)=\frac{K{0}}{s}+\frac{K_{-2}}{s+2}+\frac{A_{1}}{s+1}+\frac{A_{2}}{(s+1)^2}+
+        \frac{A_{3}}{(s+1)^3} \]  
+        Los coeficiente de los polos simples son :
+        \[K_{0}=[(s)G(s)]\Big|_{s=0}=\frac{1}{ (0+1)^{3}(0+2)}=\frac{1}{2} \]
+        \[K_{-2}=[(s+2)G(s)]\Big|_{s=-2}=\frac{1}{-2(-2+1)^{3}}=\frac{1}{2} \]
+        Luego los polos de tercer orden son:
+        \[  A_{3}=[(s+1)^3 G(s)] \Big|_{s=-1}=\frac{1}{-1(-1+2)}=-1  \]
+        \[ \begin{split} 
+        A_{2}=\frac{d}{ds}[(s+1)^3 G(s)] \Big|_{s=-1}=\frac{d}{ds}\left[ \frac{1}{s(s+2)}\right]\Big|_{s=-1}=\\ 
+        -\frac{2 (1 + s)}{s^2 (2 + s)^2}\Big|_{s=-1}=-\frac{2 (1 -1)}{(-1)^2 (2 -1)^2}=0
+        \end{split}\]
+        \[ \begin{split} 
+        A_{1}=\frac{1}{2!}\frac{d^2}{ds^2}[(s+1)^3 G(s)] \Big|_{s=-1}= 
+        \frac{1}{2!} \frac{d^2}{ds^2}\left[ \frac{1}{s(s+2)} \right]\Big|_{s=-1}=\\
+        \frac{1}{2}\frac{2 (4 + 6 s + 3 s^2)}{s^3 (2 + s)^3}\Big|_{s=-1}=\frac{1}{2}\frac{2 (4 + 6(-1) + 3(-1)^2)}{(-1)^3 (2 -1)^3}=
+        \frac{1}{2}(-2)=-1
+        \end{split}\]
+Por tanto la expansión en fracciones parciales completa es:
+        \[ G(s)=\frac{1}{2s}+\frac{1}{2(s+2)}-\frac{1}{s+1}-\frac{1}{(s+1)^3} \]
+      </p>
+    </div>
+    
+    
+    <div>
+      <h4 align="left">\( G(s) \) Tiene polos complejos conjugados simples</h4>
+      La expansión en fracciones parciales:
+      \[ G(s)=\frac{K_{s1} }{s+s_1} +\frac{K_{s2}}{s+s_2}+\cdots+\frac{K_{sn}}{s+s_n} \]
+      Tambien es valida para polos complejos conjugados simples. Suponiendo que \( G(s) \) de la 
+      ecuación:
+      G(s)=\frac{Q(s)}{P(s)}
+      Contiene un par de polos complejos:
+      \[ {s=-\alpha + j \omega }\:\:\: \textrm{and} \:\:\: {s=-\alpha - j\omega} \] 
+      Los coeficientes correspondientes de estos polos son:
+      \[ K_{-\alpha + jw}= (s+\alpha-j\omega)G(s) \Big|_{s=-\alpha+j\omega} \]
+      \[ K_{-\alpha - jw}= (s+\alpha+j\omega)G(s) \Big|_{s=-\alpha-j\omega} \]
+      Considere la función 
+      \[ G(s)=\frac{\omega_{n}^2}{s^2+2\zeta \omega_n s + \omega_{n}^2} \]
+      Suponiendo que los valores de \zeta y \omega_{n} son tales que los polos de \( G(s) \)
+      son complejos. Entonces \( G(s) \) se expande como siguiente:
+      \[ G(s)=\frac{K_{-\alpha + j\omega}}{s+\alpha-j\omega} + \frac{K_{-\alpha - j\omega}}{s+\alpha+j\omega} \]
+      En donde:
+      \[ \zeta \omega_n \]
+      y
+      \[ \omega=\omega_{n} \sqrt{1-\zeta^2} \]  
+      Luego los coeficientes se determinan como: 
+      \[ K_{-\alpha + j\omega}=(s+\alpha -j\omega)G(s)\Big|_{s=-\alpha+j\omega}=
+      \frac{\omega_{n}^2}{2j \omega} \]
+
+      \[ K_{-\alpha - j\omega}=(s+\alpha +j\omega)G(s)\Big|_{s=-\alpha-j\omega}=
+      -\frac{\omega_{n}^2}{2j \omega} \]
+      Por tanto la expansión en fracciones parciales copleta de la ecuación es:
+      \[
+      G(s)=\frac{\omega_{n}^2}{2j\omega}
+       \left [  \frac{1}{s+\alpha - j\omega}-\frac{1}{s+\alpha + j\omega} \right ]
+      \]
+      Al tomar la transformada inversa de Laplace, se tiene:  
+      \[\begin{split}
+      g(t)=\frac{\omega_{n}^2}{2j\omega}e^{-\alpha t}(e^{j\omega t}-e^{-j\omega t})=\\
+      \frac{\omega_n}{\sqrt{1-\zeta^2}}e^{-\zeta \omega_n t}\textrm{sen}\omega_n \sqrt{1-\zeta^2}\; \; \; \; t \geq 0
+      \end{split}\]
+
+    </div>  
+
+<!-- Expansion parcial Ojo -->
+
+<p>En esta sección vea <a href="SolucionporcomputadoraEFP.html">
+   Solución por computadora de la expansión en fracciones parciales</a> </p>
+
+</div>
+</body>
+</html>

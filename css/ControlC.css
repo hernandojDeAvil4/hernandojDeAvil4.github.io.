@@ -1,0 +1,146 @@
+h1{
+    text-align: center;
+}
+
+h2{
+    text-align: center;
+}
+
+h3{
+    text-align: left;
+}
+
+h4{
+    text-align: left;
+}
+
+p{
+    text-align: justify;
+}
+
+div{
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.ejemplo{ 
+    background-color: darkgreen;
+}
+
+nav{ 
+    background-color: rgb(147, 174, 106);
+}
+
+.teorema{
+    background-color: aquamarine;
+}
+
+.imagen{
+    border: 1mm solid rgb(14, 67, 18);
+    border-radius: 2mm;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 10px;
+}
+
+.codigo{
+    border: 1mm solid rgb(18, 21, 111);
+    border-radius: 2mm;
+    width: 50%;
+}
+
+.acordeon{
+    background-color: gainsboro;
+    text-align: left;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.acordeon .contenedor{
+    transition: height 4s;
+    
+}
+
+
+.acordeon .etiqueta{
+    position: relative;
+    padding: 10px 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.acordeon .etiqueta::before{
+    content: '+';
+    color: black;
+    position: absolute;
+    top: 50%;
+    right: -5px;
+    font-size: 20px;
+    transform: translate(-50%);
+}
+
+.acordeon .contenido{
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    transition: height 4s;
+}
+
+.acordeon .contenedor.activa .contenido {
+    height: auto;
+    transition: height 4s;
+  }
+
+  .acordeon .contenedor.activa .etiqueta::before {
+    content: '-';
+    font-size: 20px;
+  }
+
+  .tg  {
+    border-collapse:collapse;border-spacing:0;
+}
+
+  .tg td{
+    border-color:black;
+    border-style:solid;
+    border-width:1px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size:14px;
+    overflow:hidden;
+    padding:10px 5px;
+    word-break:normal;
+    text-align: justify;
+}
+
+  .tg th{
+    border-color:black;
+    border-style:solid;
+    border-width:1px;
+    font-family:Arial, sans-serif;
+    font-size:14px;
+    font-weight:normal;
+    overflow:hidden;
+    padding:10px 5px;
+    word-break:normal;
+}
+
+  .tg .tg-h38y{
+    background-color:#3166ff;
+    color:#333333;
+    text-align:left;
+    vertical-align:top
+}
+
+  .tg .tg-r5g3{
+    background-color:#3166ff;
+    border-color:inherit;
+    color:#333333;
+    text-align:left;
+    vertical-align:top
+}
+
+  .tg .tg-0lax{
+    text-align:left;
+    vertical-align:top
+}
